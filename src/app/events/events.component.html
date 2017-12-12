@@ -1,0 +1,31 @@
+<div class="events">
+	<div></div>
+	<div class="timeline" #timelineHeader>
+		<app-timeline></app-timeline>
+	</div>
+	<div class="resources" #resourceHeader>
+		<app-resource-item
+				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
+				[resource]="resource"
+				[ngClass]="{ 'selected': this.selectionService.selected.includes(resource) }"
+		>
+		</app-resource-item>
+	</div>
+	<div class="resources workarea" (scroll)="scroll()" #workareaHeader>
+		<app-time-events
+				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
+				[events]="getEventsByResource(resource)"
+		>
+		</app-time-events>
+	</div>
+</div>
+
+<div>
+	<label>Event name:
+		<input #eventName />
+	</label>
+	<!-- (click) passes input value to add() and then clears the input -->
+	<button (click)="add(eventName.value); eventName.value=''">
+		add
+	</button>
+</div>

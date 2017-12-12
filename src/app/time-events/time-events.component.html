@@ -1,0 +1,6 @@
+<app-event-item
+    *ngFor="let event of events; trackBy: trackByEvents"
+    [event]="event"
+    [ngClass]="{ 'selected': this.selectionService.selected.includes(event) }"
+>
+</app-event-item>

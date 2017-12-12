@@ -1,0 +1,6 @@
+@import '~sass/variables';
+
+:host {
+  display: block;
+  height: $cell-height;
+}

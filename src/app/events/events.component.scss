@@ -1,0 +1,17 @@
+:host {
+  flex-grow: 1;
+  display: flex;
+  .events {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 80px auto;
+    grid-template-rows: 80px auto;
+  }
+  .resources, .timeline {
+    overflow: hidden;
+  }
+  .workarea {
+    overflow: auto;
+    position: relative;
+  }
+}

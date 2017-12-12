@@ -1,0 +1,18 @@
+@import '~sass/variables';
+
+:host {
+  position: absolute;
+  display: block;
+  height: $cell-height;
+  background-color: aliceblue;
+  &:hover {
+  }
+  &.selected {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  a {
+    &:hover {
+    }
+  }
+}
