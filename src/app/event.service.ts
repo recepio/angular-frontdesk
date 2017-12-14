@@ -17,7 +17,7 @@ export class EventService extends CollectionService {
   }
 
   /** GET event by id. Return `undefined` when id not found */
-  getEventNo404<Data>(id: number): Observable<Event> {
+  /* getEventNo404<Data>(id: number): Observable<Event> {
     const url = `${this.eventsUrl}/?id=${id}`;
     return this.http.get<Event[]>(url)
       .pipe(
@@ -36,10 +36,10 @@ export class EventService extends CollectionService {
       tap(_ => this.log(`fetched event id=${id}`)),
       catchError(this.handleError<Event>(`getEvent id=${id}`))
     );
-  }
+  } */
 
   /* GET events whose name contains search term */
-  searchEvents(term: string): Observable<Event[]> {
+  /* searchEvents(term: string): Observable<Event[]> {
     if (!term.trim()) {
       // if not search term, return empty event array.
       return of([]);
@@ -64,5 +64,5 @@ export class EventService extends CollectionService {
       tap(_ => this.log(`updated event id=${event.id}`)),
       catchError(this.handleError<any>('updateEvent'))
     );
-  }
+  } */
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, DoCheck, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -13,13 +13,14 @@ import { ResourceService } from '../resource.service';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit, OnDestroy {
+export class EventsComponent implements OnInit, DoCheck, OnDestroy {
 
-  subscription: Subscription;
+  private subscription: Subscription;
+  public workareaWidth: number;
 
-  @ViewChild('timelineHeader', { read: ElementRef }) public timelineHeader: ElementRef<any>;
-  @ViewChild('resourceHeader', { read: ElementRef }) public resourceHeader: ElementRef<any>;
-  @ViewChild('workareaHeader', { read: ElementRef }) public workareaHeader: ElementRef<any>;
+  @ViewChild('timelineHeaderRef', { read: ElementRef }) public timelineHeaderRef: ElementRef<any>;
+  @ViewChild('resourceHeaderRef', { read: ElementRef }) public resourceHeaderRef: ElementRef<any>;
+  @ViewChild('workareaRef', { read: ElementRef }) public workareaRef: ElementRef<any>;
 
   constructor(
     public eventService: EventService,
@@ -48,8 +49,12 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   scroll () {
-    this.timelineHeader.nativeElement.scrollLeft = this.workareaHeader.nativeElement.scrollLeft;
-    this.resourceHeader.nativeElement.scrollTop = this.workareaHeader.nativeElement.scrollTop;
+    this.timelineHeaderRef.nativeElement.scrollLeft = this.workareaRef.nativeElement.scrollLeft;
+    this.resourceHeaderRef.nativeElement.scrollTop = this.workareaRef.nativeElement.scrollTop;
+  }
+
+  ngDoCheck() {
+    this.workareaWidth = this.workareaRef.nativeElement.scrollWidth;
   }
 
   ngOnDestroy() {

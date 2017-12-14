@@ -1,4 +1,11 @@
-import {Component, HostBinding, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  Component, ElementRef, Input, OnChanges, OnInit, Pipe, PipeTransform, SimpleChanges, ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+
+import {addDays, differenceInMonths, isFirstDayOfMonth} from 'date-fns';
+
+import { TimelineService } from '../timeline.service';
 
 @Component({
   selector: 'app-timeline',
@@ -6,16 +13,26 @@ import {Component, HostBinding, OnInit, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, OnChanges {
 
-  @HostBinding('width')
-  public get getWidth(): string {
-    return `${this.event.duration.days * this.timelineService.dayWidth}px`;
-  }
+  @Input() width: number;
+  @Input() height: number;
 
-  constructor() { }
+  public fitDays = 0;
+  public isFirstDay = isFirstDayOfMonth;
+
+  constructor(public timelineService: TimelineService) { }
 
   ngOnInit() {
   }
 
+  addDays (i: number): Date {
+    return addDays(this.timelineService.startFrom, i);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.width) {
+      this.fitDays = Math.floor(changes.width.currentValue / this.timelineService.dayWidth);
+    }
+  }
 }

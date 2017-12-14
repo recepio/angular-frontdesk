@@ -1,9 +1,9 @@
 <div class="events">
 	<div></div>
-	<div class="timeline" #timelineHeader>
-		<app-timeline></app-timeline>
+	<div class="timeline" #timelineHeaderRef>
+		<app-timeline [width]="workareaWidth" [height]="80"></app-timeline>
 	</div>
-	<div class="resources" #resourceHeader>
+	<div class="resources" #resourceHeaderRef>
 		<app-resource-item
 				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
 				[resource]="resource"
@@ -11,7 +11,7 @@
 		>
 		</app-resource-item>
 	</div>
-	<div class="resources workarea" (scroll)="scroll()" #workareaHeader>
+	<div class="workarea" (scroll)="scroll()" #workareaRef>
 		<app-time-events
 				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
 				[events]="getEventsByResource(resource)"

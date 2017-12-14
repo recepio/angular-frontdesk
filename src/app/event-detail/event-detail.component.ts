@@ -34,7 +34,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.eventService.updateEvent(this.event)
-      .subscribe(() => this.goBack());
+    /*this.eventService.updateEvent(this.event)
+      .subscribe(() => this.goBack());*/
   }
 }

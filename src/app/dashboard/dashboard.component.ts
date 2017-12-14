@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventService.getEvents()
+    this.eventService.get()
       .subscribe(events => this.events = events.slice(1, 5));
   }
 }
