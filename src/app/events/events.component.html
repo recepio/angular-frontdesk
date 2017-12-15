@@ -1,7 +1,7 @@
 <div class="events">
 	<div></div>
 	<div class="timeline" #timelineHeaderRef>
-		<app-timeline [width]="workareaWidth" [height]="80"></app-timeline>
+		<app-timeline [width]="workareaWidth" [height]="30 - 4" [paddingLeft]="3"></app-timeline>
 	</div>
 	<div class="resources" #resourceHeaderRef>
 		<app-resource-item
@@ -19,8 +19,7 @@
 		</app-time-events>
 	</div>
 </div>
-
-<div>
+<div class="users">
 	<label>Event name:
 		<input #eventName />
 	</label>

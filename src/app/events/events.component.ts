@@ -18,9 +18,9 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
   private subscription: Subscription;
   public workareaWidth: number;
 
-  @ViewChild('timelineHeaderRef', { read: ElementRef }) public timelineHeaderRef: ElementRef<any>;
-  @ViewChild('resourceHeaderRef', { read: ElementRef }) public resourceHeaderRef: ElementRef<any>;
-  @ViewChild('workareaRef', { read: ElementRef }) public workareaRef: ElementRef<any>;
+  @ViewChild('timelineHeaderRef') private timelineHeaderRef: ElementRef;
+  @ViewChild('resourceHeaderRef') private resourceHeaderRef: ElementRef;
+  @ViewChild('workareaRef') private workareaRef: ElementRef;
 
   constructor(
     public eventService: EventService,

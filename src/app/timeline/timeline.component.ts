@@ -1,9 +1,6 @@
-import {
-  Component, ElementRef, Input, OnChanges, OnInit, Pipe, PipeTransform, SimpleChanges, ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
-import {addDays, differenceInMonths, isFirstDayOfMonth} from 'date-fns';
+import {addDays, isFirstDayOfMonth} from 'date-fns';
 
 import { TimelineService } from '../timeline.service';
 
@@ -17,6 +14,7 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   @Input() width: number;
   @Input() height: number;
+  @Input() paddingLeft: number;
 
   public fitDays = 0;
   public isFirstDay = isFirstDayOfMonth;

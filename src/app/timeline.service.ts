@@ -9,7 +9,7 @@ import { Event } from './event';
 export class TimelineService {
 
   startFrom: Date = new Date();
-  dayWidth = 120;
+  dayWidth = 60;
 
   constructor(private eventService: EventService) { }
 

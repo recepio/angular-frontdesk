@@ -1,10 +1,41 @@
 <svg [attr.height]="height" [attr.width]="width + 20">
-	<text text-anchor="start" x="0" [attr.y]="height - 35">{{ timelineService.startFrom | date:'MMMM' }}</text>
-	<text text-anchor="start" x="0" [attr.y]="height - 10">{{ timelineService.startFrom | date:'dd' }}</text>
-	<line stroke="#000" stroke-width="2" x1="0" [attr.y1]="height - 5" x2="0" [attr.y2]="height"></line>
+	<text
+			text-anchor="start"
+			[attr.x]="paddingLeft"
+			[attr.y]="height - 17"
+	>{{ timelineService.startFrom | date:'MMMM y' }}</text>
+	<text
+			text-anchor="start"
+			[attr.x]="paddingLeft"
+			[attr.y]="height"
+	>{{ timelineService.startFrom | date:'dd' }}</text>
+	<line
+			stroke="gray"
+			stroke-width="2"
+			x1="0"
+			[attr.y1]="height - 5"
+			x2="0"
+			[attr.y2]="height"
+	></line>
 	<g *ngFor="let i of fitDays | fill">
-		<text text-anchor="start" [attr.x]="i * timelineService.dayWidth" [attr.y]="height - 35" *ngIf="isFirstDay(addDays(i))">{{ addDays(i) | date:'MMMM' }}</text>
-		<text text-anchor="start" [attr.x]="i * timelineService.dayWidth" [attr.y]="height - 10">{{ addDays(i) | date:'dd' }}</text>
-		<line stroke="#000" stroke-width="2" [attr.x1]="i * timelineService.dayWidth" [attr.y1]="height - 5" [attr.x2]="i * timelineService.dayWidth" [attr.y2]="height"></line>
+		<text
+				text-anchor="start"
+				[attr.x]="paddingLeft + i * timelineService.dayWidth"
+				[attr.y]="height - 17"
+				*ngIf="isFirstDay(addDays(i))"
+		>{{ addDays(i) | date:'MMMM y' }}</text>
+		<text
+				text-anchor="start"
+				[attr.x]="paddingLeft + i * timelineService.dayWidth"
+				[attr.y]="height"
+		>{{ addDays(i) | date:'dd' }}</text>
+		<line
+				stroke="gray"
+				stroke-width="2"
+				[attr.x1]="i * timelineService.dayWidth"
+				[attr.y1]="height - 5"
+				[attr.x2]="i * timelineService.dayWidth"
+				[attr.y2]="height"
+		></line>
 	</g>
 </svg>
