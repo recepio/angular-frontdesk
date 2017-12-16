@@ -1,7 +1,7 @@
 <div class="events">
 	<div></div>
 	<div class="timeline" #timelineHeaderRef>
-		<app-timeline [width]="workareaWidth" [height]="30 - 4" [paddingLeft]="3"></app-timeline>
+		<app-timeline [width]="workareaWidth" [height]="30" [paddingLeft]="3"></app-timeline>
 	</div>
 	<div class="resources" #resourceHeaderRef>
 		<app-resource-item
@@ -12,11 +12,18 @@
 		</app-resource-item>
 	</div>
 	<div class="workarea" (scroll)="scroll()" #workareaRef>
-		<app-time-events
-				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
-				[events]="getEventsByResource(resource)"
-		>
-		</app-time-events>
+		<div class="background">
+			<svg [attr.width]="workareaWidth" [attr.height]="workareaHeight">
+				<rect fill="url(#week-timeline-pattern)" stroke="none" width="100%" height="100%"/>
+			</svg>
+		</div>
+		<div class="time-events">
+			<app-time-events
+					*ngFor="let resource of resourceService.items; trackBy: trackByResources"
+					[events]="getEventsByResource(resource)"
+			>
+			</app-time-events>
+		</div>
 	</div>
 </div>
 <div class="users">

@@ -25,8 +25,8 @@ export class EventDetailComponent implements OnInit {
 
   getEvent(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.eventService.get(id)
-      .subscribe(event => this.event = event);
+    /*this.eventService.getEvent(id)
+      .subscribe(event => this.event = event);*/
   }
 
   goBack(): void {

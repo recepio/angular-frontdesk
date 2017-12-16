@@ -17,6 +17,7 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
 
   private subscription: Subscription;
   public workareaWidth: number;
+  public workareaHeight: number;
 
   @ViewChild('timelineHeaderRef') private timelineHeaderRef: ElementRef;
   @ViewChild('resourceHeaderRef') private resourceHeaderRef: ElementRef;
@@ -55,6 +56,7 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
 
   ngDoCheck() {
     this.workareaWidth = this.workareaRef.nativeElement.scrollWidth;
+    this.workareaHeight = this.workareaRef.nativeElement.scrollHeight;
   }
 
   ngOnDestroy() {

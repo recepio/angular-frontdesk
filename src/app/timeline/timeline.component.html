@@ -1,41 +1,24 @@
-<svg [attr.height]="height" [attr.width]="width + 20">
-	<text
-			text-anchor="start"
-			[attr.x]="paddingLeft"
-			[attr.y]="height - 17"
-	>{{ timelineService.startFrom | date:'MMMM y' }}</text>
-	<text
-			text-anchor="start"
-			[attr.x]="paddingLeft"
-			[attr.y]="height"
-	>{{ timelineService.startFrom | date:'dd' }}</text>
-	<line
-			stroke="gray"
-			stroke-width="2"
-			x1="0"
-			[attr.y1]="height - 5"
-			x2="0"
-			[attr.y2]="height"
-	></line>
+<svg [attr.width]="width + 20" [attr.height]="height">
+	<defs>
+		<pattern id="day-timeline-pattern" patternUnits="userSpaceOnUse" [attr.width]="timelineService.dayWidth" height="14">
+			<line stroke="ButtonFace" stroke-width="1" x1="0.5" y1="0" x2="0.5" y2="14"/>
+		</pattern>
+		<pattern id="week-timeline-pattern" patternUnits="userSpaceOnUse" [attr.width]="timelineService.dayWidth * 7" height="14">
+			<rect [attr.x]="timelineService.dayWidth * (timelineService.startFrom.getDay() - 4)" [attr.width]="timelineService.dayWidth * 2" height="14" fill="cornsilk"/>
+			<rect [attr.width]="timelineService.dayWidth * 7" height="14" fill="url(#day-timeline-pattern)"/>
+		</pattern>
+	</defs>
+	<rect fill="url(#week-timeline-pattern)" stroke="none" [attr.y]="height - 14" width="100%" height="14"/>
+
+	<line stroke="ButtonFace" stroke-width="1" [attr.y1]="height - 14.5" [attr.x2]="width + 20" [attr.y2]="height - 14.5"/>
+	<text [attr.x]="paddingLeft" [attr.y]="height - 18">{{ timelineService.startFrom | date:'MMMM y' }}</text>
+	<text [attr.x]="paddingLeft" [attr.y]="height - 2">{{ timelineService.startFrom | date:'dd' }}</text>
 	<g *ngFor="let i of fitDays | fill">
 		<text
-				text-anchor="start"
-				[attr.x]="paddingLeft + i * timelineService.dayWidth"
-				[attr.y]="height - 17"
+				[attr.x]="i * timelineService.dayWidth + paddingLeft"
+				[attr.y]="height - 18"
 				*ngIf="isFirstDay(addDays(i))"
 		>{{ addDays(i) | date:'MMMM y' }}</text>
-		<text
-				text-anchor="start"
-				[attr.x]="paddingLeft + i * timelineService.dayWidth"
-				[attr.y]="height"
-		>{{ addDays(i) | date:'dd' }}</text>
-		<line
-				stroke="gray"
-				stroke-width="2"
-				[attr.x1]="i * timelineService.dayWidth"
-				[attr.y1]="height - 5"
-				[attr.x2]="i * timelineService.dayWidth"
-				[attr.y2]="height"
-		></line>
+		<text [attr.x]="i * timelineService.dayWidth + paddingLeft" [attr.y]="height - 2">{{ addDays(i) | date:'dd' }}</text>
 	</g>
 </svg>
