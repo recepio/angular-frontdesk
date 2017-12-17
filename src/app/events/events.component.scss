@@ -24,14 +24,19 @@
     }
     .workarea {
       overflow: auto;
-      position: relative;
-      .background svg {
-        display: block;
-      }
-      .time-events {
-        position: absolute;
-        top: 0;
-        left: 0;
+      > div {
+        position: relative;
+        display: inline-block;
+        margin-bottom: -4px;
+        svg {
+          display: block;
+        }
+        .time-events {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
       }
     }
   }
