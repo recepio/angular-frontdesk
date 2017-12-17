@@ -37,16 +37,15 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   trackByResources(index: number, resource: Resource): number { return resource.id; }
-  trackByEvents(index: number, event: Event): number { return event.id; }
 
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.eventService.addEvent({ name } as Event).subscribe();
+    // this.eventService.addEvent({ name } as Event).subscribe();
   }
 
   getEventsByResource(resource: Resource): Event[] {
-    return <Event[]>(this.eventService.items).filter(event => event.resource === resource.id);
+    return <Event[]>(this.eventService.items).filter((event: Event) => event.resource === resource.id);
   }
 
   scroll () {

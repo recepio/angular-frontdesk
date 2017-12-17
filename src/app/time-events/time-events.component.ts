@@ -19,4 +19,6 @@ export class TimeEventsComponent implements OnInit {
   ngOnInit() {
   }
 
+  trackByEvents(index: number, event: Event): number { return event.id; }
+
 }

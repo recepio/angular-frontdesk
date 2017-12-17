@@ -4,7 +4,8 @@
 			<line stroke="ButtonFace" stroke-width="1" x1="0.5" y1="0" x2="0.5" y2="14"/>
 		</pattern>
 		<pattern id="week-timeline-pattern" patternUnits="userSpaceOnUse" [attr.width]="timelineService.dayWidth * 7" height="14">
-			<rect [attr.x]="timelineService.dayWidth * (timelineService.startFrom.getDay() - 4)" [attr.width]="timelineService.dayWidth * 2" height="14" fill="cornsilk"/>
+			<rect [attr.x]="timelineService.dayWidth * (6 - timelineService.startFrom.getDay())" [attr.width]="timelineService.dayWidth" height="14" fill="cornsilk"/>
+			<rect [attr.x]="timelineService.dayWidth * ((7 - timelineService.startFrom.getDay()) % 7)" [attr.width]="timelineService.dayWidth" height="14" fill="cornsilk"/>
 			<rect [attr.width]="timelineService.dayWidth * 7" height="14" fill="url(#day-timeline-pattern)"/>
 		</pattern>
 	</defs>
