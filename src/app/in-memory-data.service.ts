@@ -1,8 +1,8 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { addDays } from 'date-fns';
+import { addDays, addHours, startOfToday } from 'date-fns';
 
-const currentDate = new Date();
+const currentDate = addHours(startOfToday(), 12);
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {

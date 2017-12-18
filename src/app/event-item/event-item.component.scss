@@ -3,7 +3,7 @@
 :host {
   position: absolute;
   display: block;
-  height: $cell-height;
+  height: $cell-height - 1;
   background-color: aliceblue;
   &:hover {
   }

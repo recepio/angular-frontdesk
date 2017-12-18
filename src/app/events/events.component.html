@@ -19,7 +19,7 @@
 			<div class="time-events">
 				<app-time-events
 						*ngFor="let resource of resourceService.items; trackBy: trackByResources"
-						[events]="getEventsByResource(resource)"
+						[resource]="resource"
 				>
 				</app-time-events>
 			</div>

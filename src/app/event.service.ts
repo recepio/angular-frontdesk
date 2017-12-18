@@ -13,7 +13,10 @@ export class EventService extends CollectionService {
     super(http, messageService);
     this.name = 'events';
     this.get<Event>()
-      .subscribe(items => this.items = items);
+      .subscribe(items => {
+        items.forEach(event => event.date = new Date(event.date));
+        this.items = items;
+      });
   }
 
   /** GET event by id. Return `undefined` when id not found */

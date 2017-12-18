@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Event } from '../event';
+import { Resource } from '../resource';
 import { SelectionService } from '../selection.service';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-time-events',
@@ -10,9 +12,10 @@ import { SelectionService } from '../selection.service';
 })
 export class TimeEventsComponent implements OnInit {
 
-  @Input() events: Event[];
+  @Input() resource: Resource[];
 
   constructor(
+    public eventService: EventService,
     private selectionService: SelectionService
   ) { }
 

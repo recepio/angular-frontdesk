@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { max, addDays, differenceInDays } from 'date-fns';
-
-import { EventService } from './event.service';
-import { Event } from './event';
+import { startOfToday } from 'date-fns';
 
 @Injectable()
 export class TimelineService {
 
-  startFrom: Date = new Date();
+  startFrom: Date = startOfToday();
   dayWidth = 60;
 
-  constructor(private eventService: EventService) { }
+  constructor() { }
 
 }

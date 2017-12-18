@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, HostBinding, HostListener } from '@angular/core';
 
-import { differenceInDays } from 'date-fns';
-
 import { Event } from '../event';
 import { SelectionService } from '../selection.service';
 import { EventService } from '../event.service';
@@ -25,7 +23,7 @@ export class EventItemComponent implements OnInit {
 
   @HostBinding('style.left')
   public get getLeft(): string {
-    const days = differenceInDays(this.event.date, this.timelineService.startFrom);
+    const days = (this.event.date.getTime() - this.timelineService.startFrom.getTime()) / 24 / 60 / 60 / 1000;
     return `${days * this.timelineService.dayWidth}px`;
   }
 

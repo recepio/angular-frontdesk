@@ -25,6 +25,7 @@ import { TimeEventsComponent } from './time-events/time-events.component';
 import { TimelineService } from './timeline.service';
 import { TimelineComponent } from './timeline/timeline.component';
 import { FillPipe } from './fill.pipe';
+import { MatchesResourcePipe } from './matches-resource.pipe';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { FillPipe } from './fill.pipe';
     ResourceItemComponent,
     TimeEventsComponent,
     TimelineComponent,
-    FillPipe
+    FillPipe,
+    MatchesResourcePipe
   ],
   providers: [
     EventService,
