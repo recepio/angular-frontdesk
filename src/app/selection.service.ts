@@ -6,7 +6,7 @@ import {Event} from './event';
 export class SelectionService {
 
   public current: any;
-  private selected: any[] = [];
+  public selected: any[] = [];
   public currentSubject: Subject<any> = new Subject();
   public selectSubject: Subject<any> = new Subject();
 

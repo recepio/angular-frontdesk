@@ -1,7 +1,6 @@
-import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 
 import { Resource } from '../resource';
-import { SelectionService } from '../selection.service';
 import { ResourceService } from '../resource.service';
 
 @Component({
@@ -13,25 +12,8 @@ export class ResourceItemComponent implements OnInit {
 
   @Input() resource: Resource;
 
-  @HostBinding('attr.tabindex') tabindex = '0';
-  @HostListener('click', ['$event']) onClick(evt: MouseEvent) {
-    if (!evt.ctrlKey && !evt.metaKey) {
-      this.selectionService.clear();
-    }
-    if (evt.shiftKey) {
-      const beginPosition = this.resourceService.items.indexOf(this.selectionService.current);
-      const endPosition = this.resourceService.items.indexOf(this.resource);
-      console.log(beginPosition, endPosition);
-      for (let i = Math.min(beginPosition, endPosition); i <= Math.max(beginPosition, endPosition); i++) {
-        this.selectionService.select(this.resourceService.items[i], false);
-      }
-    }
-    this.selectionService.select(this.resource, false);
-  }
-
   constructor(
-    public resourceService: ResourceService,
-    public selectionService: SelectionService
+    @Inject('resourceService') public resourceService: ResourceService
   ) { }
 
   ngOnInit() {

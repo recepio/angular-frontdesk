@@ -27,6 +27,9 @@ import { TimelineService } from './timeline.service';
 import { TimelineComponent } from './timeline/timeline.component';
 import { FillPipe } from './fill.pipe';
 import { MatchesResourcePipe } from './matches-resource.pipe';
+import { UserFormComponent } from './user-form/user-form.component';
+import { UserService } from './user.service';
+import { SelectableDirective } from './selectable.directive';
 
 @NgModule({
   imports: [
@@ -55,15 +58,20 @@ import { MatchesResourcePipe } from './matches-resource.pipe';
     TimeEventsComponent,
     TimelineComponent,
     FillPipe,
-    MatchesResourcePipe
+    MatchesResourcePipe,
+    UserFormComponent,
+    SelectableDirective
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
-    EventService,
     MessageService,
-    ResourceService,
-    SelectionService,
-    TimelineService
+    TimelineService,
+    { provide: 'eventService', useClass: EventService },
+    { provide: 'resourceService', useClass: ResourceService },
+    { provide: 'userService', useClass: UserService },
+    { provide: 'userSelectionService', useClass: SelectionService },
+    { provide: 'resourceSelectionService', useClass: SelectionService },
+    { provide: 'eventSelectionService', useClass: SelectionService }
   ],
   bootstrap: [AppComponent]
 })

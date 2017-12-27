@@ -1,12 +1,12 @@
-import { Component, DoCheck, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, DoCheck, OnInit, OnDestroy, ViewChild, ElementRef, Inject } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { Resource } from '../resource';
-import { Event } from '../event';
-import { EventService } from '../event.service';
 import { SelectionService } from '../selection.service';
+import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-events',
@@ -24,11 +24,12 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('workareaRef') private workareaRef: ElementRef;
 
   constructor(
-    public eventService: EventService,
-    public resourceService: ResourceService,
-    private selectionService: SelectionService
+    @Inject('resourceService') public resourceService: ResourceService,
+    @Inject('resourceSelectionService') public resourceSelectionService: SelectionService,
+    @Inject('userService') public userService: UserService,
+    @Inject('userSelectionService') public userSelectionService: SelectionService
   ) {
-    this.subscription = this.selectionService.selectSubject.subscribe(item => {
+    this.subscription = this.resourceSelectionService.selectSubject.subscribe(item => {
       console.log(item);
     });
   }
@@ -37,15 +38,12 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   trackByResources(index: number, resource: Resource): number { return resource.id; }
+  trackByUsers(index: number, user: User): number { return user.id; }
 
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
     // this.eventService.addEvent({ name } as Event).subscribe();
-  }
-
-  getEventsByResource(resource: Resource): Event[] {
-    return <Event[]>(this.eventService.items).filter((event: Event) => event.resource === resource.id);
   }
 
   scroll () {

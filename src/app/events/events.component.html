@@ -7,7 +7,8 @@
 		<app-resource-item
 				*ngFor="let resource of resourceService.items; trackBy: trackByResources"
 				[resource]="resource"
-				[ngClass]="{ 'selected': this.selectionService.selected.includes(resource) }"
+				appSelectable="resource"
+				[item]="resource"
 		>
 		</app-resource-item>
 	</div>
@@ -34,4 +35,10 @@
 	<button (click)="add(eventName.value); eventName.value=''">
 		add
 	</button>
+	<app-user-form></app-user-form>
+	<div
+			*ngFor="let user of userService.items; trackBy: trackByUsers"
+			appSelectable="user"
+			[item]="user"
+	>{{ user.name }}</div>
 </div>

@@ -1,6 +1,7 @@
 <app-event-item
     *ngFor="let event of eventService.items | matchesResource: resource.id; trackBy: trackByEvents"
-    [event]="event"
-    [ngClass]="{ 'selected': this.selectionService.selected.includes(event) }"
+		[event]="event"
+		appSelectable="event"
+		[item]="event"
 >
 </app-event-item>

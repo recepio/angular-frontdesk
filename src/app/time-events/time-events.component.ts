@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 
 import { Event } from '../event';
 import { Resource } from '../resource';
@@ -12,11 +12,11 @@ import { EventService } from '../event.service';
 })
 export class TimeEventsComponent implements OnInit {
 
-  @Input() resource: Resource[];
+  @Input() resource: Resource;
 
   constructor(
-    public eventService: EventService,
-    private selectionService: SelectionService
+    @Inject('eventService') public eventService: EventService,
+    @Inject('eventSelectionService') public selectionService: SelectionService
   ) { }
 
   ngOnInit() {
