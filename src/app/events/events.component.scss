@@ -9,6 +9,7 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
+    padding: 5px;
     .area-region {
       display: flex;
       > button, .areas > div {
@@ -40,35 +41,43 @@
     .grid-region {
       flex-grow: 1;
       min-height: 0;
-      display: grid;
-      grid-template-columns: 80px auto;
-      grid-template-rows: 30px auto;
-      app-resource-item, app-time-events {
-        display: block;
-        height: $cell-height;
-        border-top: 1px solid ButtonFace;
-      }
-      .timeline {
-        overflow-x: hidden;
-      }
-      .resources {
-        overflow-y: hidden;
-        padding-bottom: 20px;
-      }
-      .workarea {
-        overflow: auto;
-        > div {
-          position: relative;
-          display: inline-block;
-          margin-bottom: -4px;
-          svg {
-            display: block;
-          }
-          .time-events {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+      border-right: 1px solid ButtonFace;
+      border-bottom: 1px solid ButtonFace;
+      border-left: 1px solid ButtonFace;
+      display: flex;
+      .grid {
+        flex-grow: 1;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 80px auto;
+        grid-template-rows: 30px auto;
+        app-resource-item, app-time-events {
+          display: block;
+          height: $cell-height;
+          border-top: 1px solid ButtonFace;
+        }
+        .timeline {
+          overflow-x: hidden;
+        }
+        .resources {
+          overflow-y: hidden;
+          padding-bottom: 20px;
+        }
+        .workarea {
+          overflow: auto;
+          > div {
+            position: relative;
+            display: inline-block;
+            margin-bottom: -4px;
+            svg {
+              display: block;
+            }
+            .time-events {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+            }
           }
         }
       }

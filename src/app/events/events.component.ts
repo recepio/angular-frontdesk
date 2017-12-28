@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit, OnDestroy, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, DoCheck, OnDestroy, ViewChild, ElementRef, Inject } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -14,7 +14,7 @@ import { AreaService } from '../area.service';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit, DoCheck, OnDestroy {
+export class EventsComponent implements DoCheck, OnDestroy {
 
   private subscription: Subscription;
   public workareaWidth: number;
@@ -30,12 +30,9 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
     @Inject('userService') public userService: UserService,
     @Inject('areaService') public areaService: AreaService
   ) {
-    this.subscription = this.resourceSelectionService.selectSubject.subscribe(item => {
+    this.subscription = this.resourceSelectionService.selectedChanged$.subscribe(item => {
       console.log(item);
     });
-  }
-
-  ngOnInit() {
   }
 
   trackByResources(index: number, resource: Resource): number { return resource.id; }
@@ -61,4 +58,5 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
   }
+
 }

@@ -6,10 +6,12 @@ export class SelectionService {
 
   public current: any;
   public selected: any[] = [];
-  public currentSubject: Subject<any> = new Subject();
-  public selectSubject: Subject<any> = new Subject();
 
-  constructor() { }
+  private currentSubject = new Subject();
+  private selectSubject = new Subject();
+
+  currentChanged$ = this.currentSubject.asObservable();
+  selectedChanged$ = this.selectSubject.asObservable();
 
   select (item: any, clear = true) {
     if (clear) {
