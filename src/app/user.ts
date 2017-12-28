@@ -5,6 +5,6 @@ export class User {
     public name: string,
     public power: string,
     public color?: string
-  ) {  }
+  ) { }
 
 }

@@ -2,13 +2,12 @@ import { Directive, HostBinding, HostListener, Injector, Input, OnInit } from '@
 
 import { Item } from './item';
 import { SelectionService } from './selection.service';
-import { CollectionService } from './collection.service';
 
 @Directive({
   selector: '[appSelectable]'
 })
 export class SelectableDirective implements OnInit {
-  private collectionService: CollectionService;
+  private collectionService: any;
   private selectionService: SelectionService;
 
   @Input('appSelectable') use: string;
@@ -20,6 +19,11 @@ export class SelectableDirective implements OnInit {
   @HostBinding('class.selected')
   public get getSelected() {
     return this.selectionService.selected.includes(this.item);
+  }
+
+  @HostBinding('class.current')
+  public get getCurrent() {
+    return this.selectionService.current === this.item;
   }
 
   @HostListener('click', ['$event']) onClick(evt: MouseEvent) {

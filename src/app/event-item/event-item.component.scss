@@ -1,4 +1,5 @@
 @import '~sass/variables';
+@import '~sass/mixins';
 
 :host {
   position: absolute;
@@ -8,8 +9,7 @@
   &:hover {
   }
   &.selected {
-    background-color: Highlight;
-    color: HighlightText;
+    @include selected();
   }
   a {
     &:hover {

@@ -30,6 +30,8 @@ import { MatchesResourcePipe } from './matches-resource.pipe';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserService } from './user.service';
 import { SelectableDirective } from './selectable.directive';
+import { UserItemComponent } from './user-item/user-item.component';
+import { AreaService } from './area.service';
 
 @NgModule({
   imports: [
@@ -60,18 +62,21 @@ import { SelectableDirective } from './selectable.directive';
     FillPipe,
     MatchesResourcePipe,
     UserFormComponent,
-    SelectableDirective
+    SelectableDirective,
+    UserItemComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
-    MessageService,
-    TimelineService,
+    { provide: 'areaService', useClass: AreaService },
     { provide: 'eventService', useClass: EventService },
     { provide: 'resourceService', useClass: ResourceService },
     { provide: 'userService', useClass: UserService },
+    { provide: 'areaSelectionService', useClass: SelectionService },
     { provide: 'userSelectionService', useClass: SelectionService },
     { provide: 'resourceSelectionService', useClass: SelectionService },
-    { provide: 'eventSelectionService', useClass: SelectionService }
+    { provide: 'eventSelectionService', useClass: SelectionService },
+    MessageService,
+    TimelineService
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
 import { User } from '../user';
 import { UserService } from '../user.service';
+import { AreaService } from '../area.service';
 
 @Component({
   selector: 'app-events',
@@ -25,9 +26,9 @@ export class EventsComponent implements OnInit, DoCheck, OnDestroy {
 
   constructor(
     @Inject('resourceService') public resourceService: ResourceService,
-    @Inject('resourceSelectionService') public resourceSelectionService: SelectionService,
+    @Inject('resourceSelectionService') private resourceSelectionService: SelectionService,
     @Inject('userService') public userService: UserService,
-    @Inject('userSelectionService') public userSelectionService: SelectionService
+    @Inject('areaService') public areaService: AreaService
   ) {
     this.subscription = this.resourceSelectionService.selectSubject.subscribe(item => {
       console.log(item);

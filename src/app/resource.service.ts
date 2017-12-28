@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Resource } from './resource';
-import { MessageService } from './message.service';
 import { CollectionService } from './collection.service';
+import { MessageService } from './message.service';
+import { Resource } from './resource';
 
 @Injectable()
-export class ResourceService extends CollectionService {
+export class ResourceService extends CollectionService<Resource> {
 
-  constructor(protected http: HttpClient,
-              protected messageService: MessageService) {
-    super(http, messageService);
-    this.name = 'resources';
-    this.get<Resource>()
-      .subscribe(items => this.items = items);
+  constructor(protected http: HttpClient, protected messageService: MessageService) {
+    super('resources', http, messageService);
+    this.get()
+      .subscribe((items: Resource[]) => this.items = items);
   }
+
 }

@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Event } from './event';
 
 @Pipe({
-  name: 'matchesResource'
+  name: 'matchesResource',
+  pure: false
 })
 export class MatchesResourcePipe implements PipeTransform {
 

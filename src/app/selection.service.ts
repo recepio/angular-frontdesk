@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import {Event} from './event';
 
 @Injectable()
 export class SelectionService {
@@ -21,7 +20,7 @@ export class SelectionService {
     }
     this.current = item;
     if (item) {
-      this.currentSubject.next({item, select: true });
+      this.currentSubject.next({ item, select: true });
       this.selected.push(item);
       this.selectSubject.next({ item, select: true });
     }

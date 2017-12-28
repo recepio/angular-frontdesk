@@ -4,43 +4,77 @@
   flex-grow: 1;
   display: flex;
   min-height: 0;
-  .events {
+  .event-region {
     flex-grow: 1;
     min-width: 0;
-    display: grid;
-    grid-template-columns: 80px auto;
-    grid-template-rows: 30px auto;
-    app-resource-item, app-time-events {
-      display: block;
-      height: $cell-height;
-      border-top: 1px solid ButtonFace;
-    }
-    .timeline {
-      overflow-x: hidden;
-    }
-    .resources {
-      overflow-y: hidden;
-      padding-bottom: 20px;
-    }
-    .workarea {
-      overflow: auto;
-      > div {
-        position: relative;
-        display: inline-block;
-        margin-bottom: -4px;
-        svg {
-          display: block;
+    display: flex;
+    flex-direction: column;
+    .area-region {
+      display: flex;
+      > button, .areas > div {
+        border: 1px solid ButtonFace;
+        border-right-width: 0;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        line-height: 20px;
+        padding: 2px 8px;
+      }
+      .areas {
+        display: flex;
+        > div:focus {
+          outline: none;
         }
-        .time-events {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
+        > div.current {
+          border-bottom-color: transparent;
+        }
+      }
+      > button {
+        border-right-width: 1px;
+        margin: 0;
+      }
+      > div:last-child {
+        flex-grow: 1;
+        border-bottom: 1px solid ButtonFace;
+      }
+    }
+    .grid-region {
+      flex-grow: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 80px auto;
+      grid-template-rows: 30px auto;
+      app-resource-item, app-time-events {
+        display: block;
+        height: $cell-height;
+        border-top: 1px solid ButtonFace;
+      }
+      .timeline {
+        overflow-x: hidden;
+      }
+      .resources {
+        overflow-y: hidden;
+        padding-bottom: 20px;
+      }
+      .workarea {
+        overflow: auto;
+        > div {
+          position: relative;
+          display: inline-block;
+          margin-bottom: -4px;
+          svg {
+            display: block;
+          }
+          .time-events {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+          }
         }
       }
     }
   }
-  .users {
+  .user-region {
     width: 240px;
   }
 }

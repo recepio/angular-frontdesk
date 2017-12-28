@@ -1,7 +1,8 @@
 import { Item } from './item';
 
 export class Event extends Item {
-  name: string;
+  area: number;
+  user: number;
   date: Date;
   duration: any;
   resource: number;

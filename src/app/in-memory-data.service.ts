@@ -6,17 +6,23 @@ const currentDate = addHours(startOfToday(), 12);
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
+    const areas = [
+      { id: 1, name: 'Rooms' },
+      { id: 2, name: 'Parking' },
+      { id: 3, name: 'Pool' },
+      { id: 4, name: 'Conference rooms' }
+    ];
     const events = [
-      { id: 11, name: 'Mr. Nice', date: addDays(currentDate, 2), duration: { days: 7 }, resource: 11 },
-      { id: 12, name: 'Narco', date: addDays(currentDate, 7), duration: { days: 3 }, resource: 12 },
-      { id: 13, name: 'Bombasto', date: addDays(currentDate, 10), duration: { days: 1 }, resource: 13 },
-      { id: 14, name: 'Celeritas', date: addDays(currentDate, 15), duration: { days: 15 }, resource: 14 },
-      { id: 15, name: 'Magneta', date: addDays(currentDate, 6), duration: { days: 3 }, resource: 15 },
-      { id: 16, name: 'RubberMan', date: addDays(currentDate, 4), duration: { days: 3 }, resource: 16 },
-      { id: 17, name: 'Dynama', date: addDays(currentDate, 0), duration: { days: 3 }, resource: 17 },
-      { id: 18, name: 'Dr IQ', date: addDays(currentDate, 6), duration: { days: 3 }, resource: 18 },
-      { id: 19, name: 'Magma', date: addDays(currentDate, 7), duration: { days: 3 }, resource: 19 },
-      { id: 20, name: 'Tornado', date: addDays(currentDate, 8), duration: { days: 3 }, resource: 20 }
+      { id: 11, name: 'Mr. Nice', date: addDays(currentDate, 2), duration: { days: 7 }, resource: 11, area: 1 },
+      { id: 12, name: 'Narco', date: addDays(currentDate, 7), duration: { days: 3 }, resource: 12, area: 1 },
+      { id: 13, name: 'Bombasto', date: addDays(currentDate, 10), duration: { days: 1 }, resource: 13, area: 1 },
+      { id: 14, name: 'Celeritas', date: addDays(currentDate, 15), duration: { days: 15 }, resource: 14, area: 1 },
+      { id: 15, name: 'Magneta', date: addDays(currentDate, 6), duration: { days: 3 }, resource: 15, area: 1 },
+      { id: 16, name: 'RubberMan', date: addDays(currentDate, 4), duration: { days: 3 }, resource: 16, area: 1 },
+      { id: 17, name: 'Dynama', date: addDays(currentDate, 0), duration: { days: 3 }, resource: 17, area: 1 },
+      { id: 18, name: 'Dr IQ', date: addDays(currentDate, 6), duration: { days: 3 }, resource: 18, area: 1 },
+      { id: 19, name: 'Magma', date: addDays(currentDate, 7), duration: { days: 3 }, resource: 19, area: 1 },
+      { id: 20, name: 'Tornado', date: addDays(currentDate, 8), duration: { days: 3 }, resource: 20, area: 1 }
     ];
     const resources = [
       { id: 11, name: '101' },
@@ -42,6 +48,6 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
-    return { events, resources, users };
+    return { areas, events, resources, users };
   }
 }

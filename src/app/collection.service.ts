@@ -11,15 +11,13 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-export class CollectionService {
-  items: Item[] = [];
-  protected name: string;
+export abstract class CollectionService<T extends Item> {
 
-  constructor(protected http: HttpClient,
-              protected messageService: MessageService) {
-  }
+  items: T[] = [];
 
-  get<T> (): Observable<T[]> {
+  constructor(private name: string, protected http: HttpClient, protected messageService: MessageService) { }
+
+  get (): Observable<T[]> {
     return this.http.get<T[]>(`api/${this.name}`)
       .pipe(
         tap(items => this.log(`fetched ${this.name}`)),
@@ -27,15 +25,32 @@ export class CollectionService {
       );
   }
 
-  delete (item: Item | number): Observable<Item> {
+  getItem (id: number): Observable<T> {
+    const url = `api/${this.name}/${id}`;
+    return this.http.get<T>(url).pipe(
+      tap(_ => this.log(`fetched ${this.name} id=${id}`)),
+      catchError(this.handleError<T>(`get(${this.name}) id=${id}`))
+    );
+  }
+
+  add (item: T): Observable<T> {
+    this.items.push(item);
+
+    return this.http.post<T>(`api/${this.name}`, item, httpOptions).pipe(
+      tap((item: T) => this.log(`added ${this.name} w/ id=${item.id}`)),
+      catchError(this.handleError<T>(`add(${this.name})`))
+    );
+  }
+
+  delete (item: T | number): Observable<T> {
     const id = typeof item === 'number' ? item : item.id;
     const url = `api/${this.name}/${id}`;
 
     this.items = this.items.filter(h => h !== item);
 
-    return this.http.delete<Item>(url, httpOptions).pipe(
+    return this.http.delete<T>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted ${this.name} id=${id}`)),
-      catchError(this.handleError<Item>(`delete(${this.name})`))
+      catchError(this.handleError<T>(`delete(${this.name})`))
     );
   }
 

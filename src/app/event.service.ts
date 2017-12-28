@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Event } from './event';
-import { MessageService } from './message.service';
 import { CollectionService } from './collection.service';
+import { MessageService } from './message.service';
+import { Event } from './event';
 
 @Injectable()
-export class EventService extends CollectionService {
+export class EventService extends CollectionService<Event> {
 
-  constructor(protected http: HttpClient,
-              protected messageService: MessageService) {
-    super(http, messageService);
-    this.name = 'events';
-    this.get<Event>()
-      .subscribe(items => {
+  constructor(protected http: HttpClient, protected messageService: MessageService) {
+    super('events', http, messageService);
+    this.get()
+      .subscribe((items: Event[]) => {
         items.forEach(event => event.date = new Date(event.date));
         this.items = items;
       });
@@ -33,14 +31,6 @@ export class EventService extends CollectionService {
       );
   }
 
-  getEvent(id: number): Observable<Event> {
-    const url = `${this.eventsUrl}/${id}`;
-    return this.http.get<Event>(url).pipe(
-      tap(_ => this.log(`fetched event id=${id}`)),
-      catchError(this.handleError<Event>(`getEvent id=${id}`))
-    );
-  } */
-
   /* GET events whose name contains search term */
   /* searchEvents(term: string): Observable<Event[]> {
     if (!term.trim()) {
@@ -53,19 +43,11 @@ export class EventService extends CollectionService {
     );
   }
 
-  addEvent (event: Event): Observable<Event> {
-    this.events.push(event);
-
-    return this.http.post<Event>(this.eventsUrl, event, httpOptions).pipe(
-      tap((event: Event) => this.log(`added event w/ id=${event.id}`)),
-      catchError(this.handleError<Event>('addEvent'))
-    );
-  }
-
   updateEvent (event: Event): Observable<any> {
     return this.http.put(this.eventsUrl, event, httpOptions).pipe(
       tap(_ => this.log(`updated event id=${event.id}`)),
       catchError(this.handleError<any>('updateEvent'))
     );
   } */
+
 }
