@@ -1,20 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs/Observable';
 
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
 import { Event } from './event';
+import { UserService } from './user.service';
+import { ResourceService } from './resource.service';
 
 @Injectable()
 export class EventService extends CollectionService<Event> {
 
-  constructor(protected http: HttpClient, protected messageService: MessageService) {
+  constructor(
+    protected http: HttpClient,
+    protected messageService: MessageService,
+    @Inject('userService') private userService: UserService,
+    private injector: Injector
+  ) {
     super('events', http, messageService);
     this.get()
-      .subscribe((items: Event[]) => {
-        items.forEach(event => event.date = new Date(event.date));
+      .subscribe(items => {
+        items.forEach(event => {
+          event.date = new Date(event.date);
+          event.users = this.userService.items.filter(user => event['user_ids'].includes(user.id));
+        });
         this.items = items;
       });
+  }
+
+  delete (item: Event | number): Observable<Event> {
+    const resourceService: ResourceService = this.injector.get('resourceService');
+    const id = typeof item === 'number' ? item : item.id;
+
+    resourceService.items.forEach(resource => {
+      resource.events = resource.events.filter(event => event.id !== id);
+    });
+
+    return super.delete(item);
   }
 
   /** GET event by id. Return `undefined` when id not found */

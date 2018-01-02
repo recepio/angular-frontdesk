@@ -5,6 +5,8 @@ import { Resource } from '../resource';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { TimelineService } from '../timeline.service';
+import { UserService } from '../user.service';
+import { ResourceService } from '../resource.service';
 
 @Component({
   selector: 'app-time-events',
@@ -83,6 +85,8 @@ export class TimeEventsComponent implements OnInit {
   constructor(
     private elRef: ElementRef,
     @Inject('eventService') public eventService: EventService,
+    @Inject('userService') public userService: UserService,
+    @Inject('resourceService') public resourceService: ResourceService,
     @Inject('eventSelectionService') private eventSelectionService: SelectionService,
     @Inject('areaSelectionService') private areaSelectionService: SelectionService,
     private timelineService: TimelineService,
@@ -139,14 +143,14 @@ export class TimeEventsComponent implements OnInit {
       });
       return model;*/
     } else {
-      return this.eventService.add({
-        area: this.areaSelectionService.current.id,
-        resource: this.resource.id,
-        user: data.id,
-        date: new Date(this.timelineService.startFrom.getTime() +
-          (position.x / this.timelineService.dayWidth * 24 * 60 * 60 * 1000)),
-        duration: { days: 3 }
-      });
+      const event = new Event();
+      event.users = [ this.userService.items.find(user => user.id === data.id) ];
+      event.date = new Date(this.timelineService.startFrom.getTime() +
+        (position.x / this.timelineService.dayWidth * 24 * 60 * 60 * 1000));
+      event.duration = { days: 3 };
+      this.resource.events.push(event);
+      this.eventService.add(event);
+      return event;
     }
   }
 

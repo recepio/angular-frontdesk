@@ -26,11 +26,11 @@ export class EventsComponent implements DoCheck, OnDestroy {
 
   constructor(
     @Inject('resourceService') public resourceService: ResourceService,
-    @Inject('resourceSelectionService') private resourceSelectionService: SelectionService,
+    @Inject('areaSelectionService') public areaSelectionService: SelectionService,
     @Inject('userService') public userService: UserService,
     @Inject('areaService') public areaService: AreaService
   ) {
-    this.subscription = this.resourceSelectionService.selectedChanged$.subscribe(item => {
+    this.subscription = this.areaSelectionService.currentChanged$.subscribe(item => {
       console.log(item);
     });
   }

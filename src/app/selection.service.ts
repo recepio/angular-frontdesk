@@ -18,7 +18,7 @@ export class SelectionService {
       this.clear();
     }
     if (this.current) {
-      this.currentSubject.next({ current: this.current, select: false });
+      this.currentSubject.next({ item: this.current, select: false });
     }
     this.current = item;
     if (item) {

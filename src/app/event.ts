@@ -1,9 +1,8 @@
 import { Item } from './item';
+import { User } from './user';
 
 export class Event extends Item {
-  area: number;
-  user: number;
+  users: User[];
   date: Date;
   duration: any;
-  resource: number;
 }

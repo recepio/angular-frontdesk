@@ -22,11 +22,14 @@
       }
       .areas {
         display: flex;
-        > div:focus {
-          outline: none;
-        }
-        > div.current {
-          border-bottom-color: transparent;
+        > div {
+          cursor: default;
+          &:focus {
+            outline: none;
+          }
+          &.current {
+            border-bottom-color: transparent;
+          }
         }
       }
       > button {

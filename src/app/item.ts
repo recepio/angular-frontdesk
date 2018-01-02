@@ -1,3 +1,3 @@
 export class Item {
-  id: number;
+  id?: number;
 }

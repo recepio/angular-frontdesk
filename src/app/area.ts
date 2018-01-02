@@ -1,8 +1,9 @@
+import { Resource } from './resource';
+
 export class Area {
 
-  constructor(
-    public id: number,
-    public name: string
-  ) { }
+  public id: number;
+  public name: string;
+  resources: Resource[];
 
 }

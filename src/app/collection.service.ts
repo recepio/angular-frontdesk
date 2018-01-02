@@ -46,7 +46,7 @@ export abstract class CollectionService<T extends Item> {
     const id = typeof item === 'number' ? item : item.id;
     const url = `api/${this.name}/${id}`;
 
-    this.items = this.items.filter(h => h !== item);
+    this.items = this.items.filter(h => h.id !== id);
 
     return this.http.delete<T>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted ${this.name} id=${id}`)),
