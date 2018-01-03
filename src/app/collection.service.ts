@@ -60,7 +60,7 @@ export abstract class CollectionService<T extends Item> {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  protected handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -74,7 +74,7 @@ export abstract class CollectionService<T extends Item> {
     };
   }
 
-  private log(message: string) {
+  protected log(message: string) {
     this.messageService.add(`(${this.name})Service: ${message}`);
   }
 }

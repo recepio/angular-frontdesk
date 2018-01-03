@@ -5,8 +5,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SelectionService } from '../selection.service';
 import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
-import { User } from '../user';
-import { UserService } from '../user.service';
 import { AreaService } from '../area.service';
 
 @Component({
@@ -27,7 +25,6 @@ export class EventsComponent implements DoCheck, OnDestroy {
   constructor(
     @Inject('resourceService') public resourceService: ResourceService,
     @Inject('areaSelectionService') public areaSelectionService: SelectionService,
-    @Inject('userService') public userService: UserService,
     @Inject('areaService') public areaService: AreaService
   ) {
     this.subscription = this.areaSelectionService.currentChanged$.subscribe(item => {
@@ -36,7 +33,6 @@ export class EventsComponent implements DoCheck, OnDestroy {
   }
 
   trackByResources(index: number, resource: Resource): number { return resource.id; }
-  trackByUsers(index: number, user: User): number { return user.id; }
 
   add(name: string): void {
     name = name.trim();

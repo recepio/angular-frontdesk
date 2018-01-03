@@ -2,6 +2,8 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import {catchError, map, tap} from 'rxjs/operators';
 
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
@@ -29,15 +31,14 @@ export class EventService extends CollectionService<Event> {
       });
   }
 
-  delete (item: Event | number): Observable<Event> {
+  delete (event: Event | number): Observable<Event> {
     const resourceService: ResourceService = this.injector.get('resourceService');
-    const id = typeof item === 'number' ? item : item.id;
 
     resourceService.items.forEach(resource => {
-      resource.events = resource.events.filter(event => event.id !== id);
+      resource.events = resource.events.filter(e => e !== event);
     });
 
-    return super.delete(item);
+    return super.delete(event);
   }
 
   /** GET event by id. Return `undefined` when id not found */
@@ -55,18 +56,22 @@ export class EventService extends CollectionService<Event> {
   }
 
   /* GET events whose name contains search term */
-  /* searchEvents(term: string): Observable<Event[]> {
+  search(term: string): Observable<Event[]> {
     if (!term.trim()) {
       // if not search term, return empty event array.
       return of([]);
     }
-    return this.http.get<Event[]>(`api/events/?name=${term}`).pipe(
+    return this.http.get<Event[]>(`api/events/?date=${term}`).pipe(
       tap(_ => this.log(`found events matching "${term}"`)),
+      map(events => {
+        events.map(event => event.users = this.userService.items.filter(user => event['user_ids'].includes(user.id)));
+        return events;
+      }),
       catchError(this.handleError<Event[]>('searchEvents', []))
     );
   }
 
-  updateEvent (event: Event): Observable<any> {
+  /*updateEvent (event: Event): Observable<any> {
     return this.http.put(this.eventsUrl, event, httpOptions).pipe(
       tap(_ => this.log(`updated event id=${event.id}`)),
       catchError(this.handleError<any>('updateEvent'))

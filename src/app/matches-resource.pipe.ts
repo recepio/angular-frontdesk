@@ -9,7 +9,7 @@ import { Event } from './event';
 export class MatchesResourcePipe implements PipeTransform {
 
   transform(events: Event[], resource: number): Event[] {
-    return events.filter(event => event.resource === resource);
+    return ;//events.filter(event => event.resource === resource);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -20,7 +20,7 @@ export class EventSearchComponent implements OnInit {
   events$: Observable<Event[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private eventService: EventService) { }
+  constructor(@Inject('eventService') private eventService: EventService) { }
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -28,7 +28,7 @@ export class EventSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.events$ = this.searchTerms.pipe(
+    this.events$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
@@ -36,7 +36,7 @@ export class EventSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.eventService.searchEvents(term)),
-    );*/
+      switchMap((term: string) => this.eventService.search(term)),
+    );
   }
 }

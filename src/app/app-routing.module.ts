@@ -7,7 +7,7 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 
 const routes: Routes = [
   { path: '', component: EventsComponent },
-  { path: 'dashboard', component: EventsComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: EventDetailComponent },
   { path: 'events', component: EventsComponent }
 ];

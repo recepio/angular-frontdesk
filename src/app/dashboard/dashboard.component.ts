@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 
@@ -10,14 +10,9 @@ import { EventService } from '../event.service';
 export class DashboardComponent implements OnInit {
   events: Event[] = [];
 
-  constructor(private eventService: EventService) { }
+  constructor(@Inject('eventService') public eventService: EventService) { }
 
   ngOnInit() {
-    this.getEvents();
   }
 
-  getEvents(): void {
-    this.eventService.get()
-      .subscribe(events => this.events = events.slice(1, 5));
-  }
 }

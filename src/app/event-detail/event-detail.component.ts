@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -15,7 +15,7 @@ export class EventDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private eventService: EventService,
+    @Inject('eventService') private eventService: EventService,
     private location: Location
   ) { }
 

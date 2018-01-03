@@ -38,20 +38,5 @@
 		</div>
 	</div>
 </div>
-<div class="user-region">
-	<label>Event name:
-		<input #eventName />
-	</label>
-	<!-- (click) passes input value to add() and then clears the input -->
-	<button (click)="add(eventName.value); eventName.value=''">
-		add
-	</button>
-	<app-user-form></app-user-form>
-	<app-user-item
-			*ngFor="let user of userService.items; trackBy: trackByUsers"
-			[user]="user"
-			appSelectable="user"
-			[item]="user"
-			draggable="true"
-	></app-user-item>
-</div>
+<app-users>
+</app-users>

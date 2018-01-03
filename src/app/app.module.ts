@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
@@ -32,6 +32,12 @@ import { UserService } from './user.service';
 import { SelectableDirective } from './selectable.directive';
 import { UserItemComponent } from './user-item/user-item.component';
 import { AreaService } from './area.service';
+import { UsersComponent } from './users/users.component';
+import { IndexedDbService } from './indexed-db.service';
+
+export function initIndexedDb(indexedDbService: IndexedDbService): Function {
+  return () => indexedDbService.open();
+}
 
 @NgModule({
   imports: [
@@ -63,7 +69,8 @@ import { AreaService } from './area.service';
     MatchesResourcePipe,
     UserFormComponent,
     SelectableDirective,
-    UserItemComponent
+    UserItemComponent,
+    UsersComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
@@ -75,8 +82,10 @@ import { AreaService } from './area.service';
     { provide: 'userSelectionService', useClass: SelectionService },
     { provide: 'resourceSelectionService', useClass: SelectionService },
     { provide: 'eventSelectionService', useClass: SelectionService },
+    { provide: APP_INITIALIZER, useFactory: initIndexedDb, deps: [IndexedDbService], multi: true },
     MessageService,
-    TimelineService
+    TimelineService,
+    IndexedDbService
   ],
   bootstrap: [AppComponent]
 })
