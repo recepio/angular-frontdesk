@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SelectionService } from '../selection.service';
 import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
-import { AreaService } from '../area.service';
 
 @Component({
   selector: 'app-events',
@@ -25,14 +24,13 @@ export class EventsComponent implements DoCheck, OnDestroy {
   constructor(
     @Inject('resourceService') public resourceService: ResourceService,
     @Inject('areaSelectionService') public areaSelectionService: SelectionService,
-    @Inject('areaService') public areaService: AreaService
   ) {
     this.subscription = this.areaSelectionService.currentChanged$.subscribe(item => {
       console.log(item);
     });
   }
 
-  trackByResources(index: number, resource: Resource): number { return resource.id; }
+  trackByResources(index: number, resource: Resource): string { return resource.id; }
 
   add(name: string): void {
     name = name.trim();

@@ -1,57 +1,62 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
+import { IndexDetails } from 'angular2-indexeddb';
 
 import { Item } from './item';
 import { MessageService } from './message.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { IndexedDbService } from './indexed-db.service';
 
 export abstract class CollectionService<T extends Item> {
 
   items: T[] = [];
 
-  constructor(private name: string, protected http: HttpClient, protected messageService: MessageService) { }
+  constructor(private name: string, protected indexedDbService: IndexedDbService, protected messageService: MessageService) { }
 
-  get (): Observable<T[]> {
-    return this.http.get<T[]>(`api/${this.name}`)
+  get (indexDetails?: IndexDetails): Observable<T[]> {
+    return Observable.fromPromise(this.indexedDbService.db.getAll(this.name, null, indexDetails))
       .pipe(
-        tap(items => this.log(`fetched ${this.name}`)),
+        tap(_ => this.log(`fetched ${this.name}`)),
         catchError(this.handleError(`get(${this.name})`, []))
       );
   }
 
-  getItem (id: number): Observable<T> {
+  /*getItem (id: number): Observable<T> {
     const url = `api/${this.name}/${id}`;
     return this.http.get<T>(url).pipe(
       tap(_ => this.log(`fetched ${this.name} id=${id}`)),
       catchError(this.handleError<T>(`get(${this.name}) id=${id}`))
     );
-  }
+  }*/
 
   add (item: T): Observable<T> {
     this.items.push(item);
 
-    return this.http.post<T>(`api/${this.name}`, item, httpOptions).pipe(
-      tap((item: T) => this.log(`added ${this.name} w/ id=${item.id}`)),
-      catchError(this.handleError<T>(`add(${this.name})`))
-    );
+    return Observable.fromPromise(this.indexedDbService.db.add(this.name, item))
+      .pipe(
+        tap(_ => this.log(`added ${this.name} w/ id=${item.id}`)),
+        catchError(this.handleError<T>(`add(${this.name})`))
+      );
   }
 
-  delete (item: T | number): Observable<T> {
-    const id = typeof item === 'number' ? item : item.id;
-    const url = `api/${this.name}/${id}`;
+  update (item: T): Observable<any> {
+    return Observable.fromPromise(this.indexedDbService.db.update(this.name, item))
+      .pipe(
+        tap(_ => this.log(`updated ${this.name} id=${item.id}`)),
+        catchError(this.handleError<any>(`update(${this.name})`))
+      );
+  }
+
+  delete (item: T | string): Observable<T> {
+    const id = typeof item === 'string' ? item : item.id;
 
     this.items = this.items.filter(h => h.id !== id);
 
-    return this.http.delete<T>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted ${this.name} id=${id}`)),
-      catchError(this.handleError<T>(`delete(${this.name})`))
-    );
+    return Observable.fromPromise(this.indexedDbService.db.delete(this.name, id))
+      .pipe(
+        tap(_ => this.log(`deleted ${this.name} id=${id}`)),
+        catchError(this.handleError<T>(`delete(${this.name})`))
+      );
   }
 
   /**

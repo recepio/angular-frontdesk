@@ -1,5 +1,4 @@
 import { Inject, Injectable, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -10,17 +9,18 @@ import { MessageService } from './message.service';
 import { Event } from './event';
 import { UserService } from './user.service';
 import { ResourceService } from './resource.service';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable()
 export class EventService extends CollectionService<Event> {
 
   constructor(
-    protected http: HttpClient,
+    protected indexedDbService: IndexedDbService,
     protected messageService: MessageService,
     @Inject('userService') private userService: UserService,
     private injector: Injector
   ) {
-    super('events', http, messageService);
+    super('events', indexedDbService, messageService);
     this.get()
       .subscribe(items => {
         items.forEach(event => {
@@ -56,7 +56,7 @@ export class EventService extends CollectionService<Event> {
   }
 
   /* GET events whose name contains search term */
-  search(term: string): Observable<Event[]> {
+  /*search(term: string): Observable<Event[]> {
     if (!term.trim()) {
       // if not search term, return empty event array.
       return of([]);
@@ -69,13 +69,6 @@ export class EventService extends CollectionService<Event> {
       }),
       catchError(this.handleError<Event[]>('searchEvents', []))
     );
-  }
-
-  /*updateEvent (event: Event): Observable<any> {
-    return this.http.put(this.eventsUrl, event, httpOptions).pipe(
-      tap(_ => this.log(`updated event id=${event.id}`)),
-      catchError(this.handleError<any>('updateEvent'))
-    );
-  } */
+  }*/
 
 }

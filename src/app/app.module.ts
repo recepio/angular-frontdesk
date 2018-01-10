@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+import { DndModule } from 'ng2-dnd';
+
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 
@@ -34,6 +36,13 @@ import { UserItemComponent } from './user-item/user-item.component';
 import { AreaService } from './area.service';
 import { UsersComponent } from './users/users.component';
 import { IndexedDbService } from './indexed-db.service';
+import { MatchesUserPipe } from './matches-user.pipe';
+import { AreaFormComponent } from './area-form/area-form.component';
+import { DialogWrapperComponent } from './dialog-wrapper/dialog-wrapper.component';
+import { DialogService } from './dialog.service';
+import { AreaItemComponent } from './area-item/area-item.component';
+import { AutofocusDirective } from './autofocus.directive';
+import { AreasComponent } from './areas/areas.component';
 
 export function initIndexedDb(indexedDbService: IndexedDbService): Function {
   return () => indexedDbService.open();
@@ -51,7 +60,8 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    DndModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -70,7 +80,13 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     UserFormComponent,
     SelectableDirective,
     UserItemComponent,
-    UsersComponent
+    UsersComponent,
+    MatchesUserPipe,
+    AreaFormComponent,
+    DialogWrapperComponent,
+    AreaItemComponent,
+    AutofocusDirective,
+    AreasComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
@@ -85,7 +101,8 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     { provide: APP_INITIALIZER, useFactory: initIndexedDb, deps: [IndexedDbService], multi: true },
     MessageService,
     TimelineService,
-    IndexedDbService
+    IndexedDbService,
+    DialogService
   ],
   bootstrap: [AppComponent]
 })

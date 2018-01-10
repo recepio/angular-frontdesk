@@ -1,11 +1,5 @@
 <div class="event-region">
-	<div class="area-region">
-		<div class="areas">
-			<div *ngFor="let area of areaService.items" appSelectable="area" [item]="area">{{ area.name }}</div>
-		</div>
-		<button>+</button>
-		<div></div>
-	</div>
+	<app-areas></app-areas>
 	<div class="grid-region">
 		<div class="grid">
 			<div></div>

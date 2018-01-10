@@ -95,7 +95,7 @@ export class TimeEventsComponent implements OnInit {
   ngOnInit() {
   }
 
-  trackByEvents(index: number, event: Event): number { return event.id; }
+  trackByEvents(index: number, event: Event): string { return event.id; }
 
   private getPositionFromEvent(evt: DragEvent) {
     let offsetX = this.elRef.nativeElement.offsetLeft;

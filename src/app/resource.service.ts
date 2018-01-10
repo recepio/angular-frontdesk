@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
 import { Resource } from './resource';
 import { EventService} from './event.service';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable()
 export class ResourceService extends CollectionService<Resource> {
 
   constructor(
-    protected http: HttpClient,
+    protected indexedDbService: IndexedDbService,
     protected messageService: MessageService,
     @Inject('eventService') private eventService: EventService
   ) {
-    super('resources', http, messageService);
+    super('resources', indexedDbService, messageService);
     this.get()
       .subscribe(items => {
         items.forEach(resource => {

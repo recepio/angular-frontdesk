@@ -14,13 +14,16 @@ export class IndexedDbService {
   open(): Promise<any> {
 
     return this.db.openDatabase(1, evt => {
-      const objectStore = evt.currentTarget.result.createObjectStore(
-        'users',
-        { keyPath: 'id' }
-      );
+      const userStore = evt.currentTarget.result.createObjectStore('users', { keyPath: 'id' });
+      userStore.createIndex('email', 'email', { unique: true });
 
-      objectStore.createIndex('name', 'name', { unique: false });
-      objectStore.createIndex('email', 'email', { unique: true });
+      const eventStore = evt.currentTarget.result.createObjectStore('events', { keyPath: 'id' });
+      eventStore.createIndex('date', 'date', { unique: false });
+
+      const areaStore = evt.currentTarget.result.createObjectStore('areas', { keyPath: 'id' });
+      areaStore.createIndex('order', 'order', { unique: true });
+
+      const resourceStore = evt.currentTarget.result.createObjectStore('resources', { keyPath: 'id' });
     });
   }
 

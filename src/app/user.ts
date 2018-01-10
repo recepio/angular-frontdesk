@@ -1,10 +1,15 @@
+import { v4 as uuid } from 'uuid';
+
 export class User {
 
+  id: string;
+  email?: string;
+  color?: string;
+
   constructor(
-    public id: string,
-    public name: string,
-    public email?: string,
-    public color?: string
-  ) { }
+    public name: string
+  ) {
+    this.id = uuid();
+  }
 
 }
