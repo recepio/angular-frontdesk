@@ -1,13 +1,13 @@
 <span>{{ area.name }}</span>
 <input
-    *ngIf="editing"
-    #editedarea
-    type="text"
-    [value]="area.name"
-    (input)="area.name = editedarea.value.trim()"
-    (blur)="updateEditing()"
-    (keyup.enter)="updateEditing()"
-    (keyup.escape)="editing = false; area.name = oldName"
-		appAutofocus
-		title="Edit"
+  *ngIf="editing"
+  #editedarea
+  type="text"
+  [value]="area.name"
+  (input)="area.name = editedarea.value.trim()"
+  (blur)="updateEditing()"
+  (keyup.enter)="updateEditing()"
+  (keyup.escape)="editing = false; area.name = oldName"
+  appAutofocus
+  title="Edit"
 >

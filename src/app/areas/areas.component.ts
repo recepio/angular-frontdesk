@@ -27,6 +27,10 @@ export class AreasComponent implements OnInit {
     this.areaService.add(area);
   }
 
+  addForm() {
+    console.log('open add Form');
+  }
+
   areaDropped(evt: any, area: Area, index: number) {
     this.areaSelectionService.select(area);
     if (index < area.order) {
