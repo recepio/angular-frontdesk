@@ -9,6 +9,8 @@ export class Area {
   order: number;
   name: string;
   resources: Resource[];
+  serviceName: string;
+  description: string;
 
   constructor(areaService: AreaService) {
     this.id = uuid();
