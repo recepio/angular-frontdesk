@@ -19,7 +19,7 @@ export class AreaFormComponent implements OnInit {
 
   onSubmit() {
     // this.submitted = true;
-    /*this.userService.add(this.model as User).subscribe();*/
+    // this.userService.add(this.model as User).subscribe();
   }
 
 }

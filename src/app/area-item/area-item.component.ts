@@ -35,4 +35,8 @@ export class AreaItemComponent implements OnInit {
     return this.areaService.update(this.area);
   }
 
+  doubleClikc() {
+    console.log('open the subarea forms');
+  }
+
 }
