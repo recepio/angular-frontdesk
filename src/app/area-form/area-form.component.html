@@ -1,4 +1,4 @@
-<header>Edit Canvas</header>
+<!-- <header>Edit Canvas</header>
 <form method="dialog" (ngSubmit)="onSubmit()" #areaForm="ngForm">
   <section class="form">
     <div>
@@ -20,4 +20,20 @@
       <button type="reset">Cancel</button>
     </div>
   </menu>
+</form> -->
+<form class="subarea" (ngSubmit)="onSubmit()" #areaForm="ngForm">
+  <div class="row">
+    <div class="col-sm-3 service-name">
+      <label for="name-input">Service name</label>
+      <div>
+        <input type="text" id="name-input" required />
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <label for="des-input">Service descripton</label>
+      <div>
+        <input type="text" id="des-input" required />
+      </div>
+    </div>
+  </div>
 </form>
