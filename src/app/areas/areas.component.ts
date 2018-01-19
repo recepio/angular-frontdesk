@@ -24,7 +24,8 @@ export class AreasComponent implements OnInit {
 
   add() {
     const area = new Area(this.areaService);
-    this.areaService.add(area);
+    console.log(area);
+
   }
 
   areaDropped(evt: any, area: Area, index: number) {

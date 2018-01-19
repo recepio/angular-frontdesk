@@ -13,7 +13,7 @@ export class UserFormComponent {
   powers = ['Really Smart', 'Super Flexible',
     'Super Hot', 'Weather Changer'];
 
-  model = new User('18', 'Dr IQ', this.powers[0], 'red');
+  //model = new User('18', 'Dr IQ', this.powers[0], 'red');
 
   submitted = false;
 
@@ -25,6 +25,6 @@ export class UserFormComponent {
   }
 
   newUser() {
-    this.model = new User('42', '', '');
+    //this.model = new User('42', '', '');
   }
 }

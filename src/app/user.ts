@@ -1,15 +1,17 @@
-import { v4 as uuid } from 'uuid';
+import { UUID } from 'angular2-uuid';
 
 export class User {
 
   id: string;
-  email?: string;
-  color?: string;
+  email: string;
+  type?: string;
+  phoneNumber?: string;
+  citizenship?: string;
 
   constructor(
     public name: string
   ) {
-    this.id = uuid();
+    this.id = UUID.UUID();
   }
 
 }

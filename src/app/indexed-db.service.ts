@@ -15,7 +15,10 @@ export class IndexedDbService {
 
     return this.db.openDatabase(1, evt => {
       const userStore = evt.currentTarget.result.createObjectStore('users', { keyPath: 'id' });
-      userStore.createIndex('email', 'email', { unique: true });
+      userStore.createIndex('email_idx', 'email', { unique: true });
+      userStore.createIndex('type_idx', 'type', { unique: false });
+      userStore.createIndex('phone_number_idx', 'phone_number', { unique: false });
+      userStore.createIndex('citizenship_idx', 'citizenship', { unique: false });
 
       const eventStore = evt.currentTarget.result.createObjectStore('events', { keyPath: 'id' });
       eventStore.createIndex('date', 'date', { unique: false });
