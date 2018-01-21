@@ -22,9 +22,10 @@ export class AreasComponent implements OnInit {
 
   trackByAreas(index: number, area: Area): string { return area.id; }
 
-  add() {
+  add(event) {
     const area = new Area(this.areaService);
     this.areaService.add(area);
+    console.log('Add area');
   }
 
   areaDropped(evt: any, area: Area, index: number) {
