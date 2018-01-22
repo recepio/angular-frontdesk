@@ -28,10 +28,12 @@ export class UsersComponent {
   }
 
   update() {
-    this.userService.update(this.userEdit).
-    pipe(
-        tap(_ =>{
-            this.openEditor = false;}))
+    let that = this;
+    this.userService.update(this.userEdit).subscribe(
+        function (x) { console.log('onNext: ' + x); },
+        function (e) { console.log('onError: ' + e.message); },
+        function () { that.openEditor  = false; }
+    );
   }
 
   cancel():void{
