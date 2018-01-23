@@ -14,12 +14,11 @@ export class AreaFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.model);
   }
 
   onSubmit() {
     // this.submitted = true;
-    // this.userService.add(this.model as User).subscribe();
+    /*this.userService.add(this.model as User).subscribe();*/
   }
 
 }

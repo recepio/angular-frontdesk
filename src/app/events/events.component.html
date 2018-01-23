@@ -8,10 +8,10 @@
 			</div>
 			<div class="resources" #resourceHeaderRef *ngIf="areaSelectionService.current">
 				<app-resource-item
-					*ngFor="let resource of areaSelectionService.current.resources; trackBy: trackByResources"
-					[resource]="resource"
-					appSelectable="resource"
-					[item]="resource"
+						*ngFor="let resource of areaSelectionService.current.resources; trackBy: trackByResources"
+						[resource]="resource"
+						appSelectable="resource"
+						[item]="resource"
 				>
 				</app-resource-item>
 			</div>
@@ -22,8 +22,8 @@
 					</svg>
 					<div class="time-events">
 						<app-time-events
-							*ngFor="let resource of areaSelectionService.current.resources; trackBy: trackByResources"
-							[resource]="resource"
+								*ngFor="let resource of areaSelectionService.current.resources; trackBy: trackByResources"
+								[resource]="resource"
 						>
 						</app-time-events>
 					</div>

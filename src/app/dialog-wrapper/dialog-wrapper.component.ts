@@ -12,7 +12,7 @@ interface DialogPolyFill {
 declare var dialogPolyfill: DialogPolyFill;
 
 @Component({
-  selector: 'app-dialog-wrapper',
+  selector: '[dialog-wrapper]',
   template: '<div #target></div>',
   styleUrls: ['./dialog-wrapper.component.scss']
 })

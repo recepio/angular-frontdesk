@@ -1,11 +1,11 @@
 <input type="search" placeholder="Filter" #searchBox (input)="search(searchBox.value)">
 <div class="users">
   <app-user-item
-    *ngFor="let user of userService.items | matchesUser: searchBox.value; trackBy: trackByUsers"
-    [user]="user"
-    appSelectable="user"
-    [item]="user"
-    draggable="true"
+      *ngFor="let user of userService.items | matchesUser: searchBox.value; trackBy: trackByUsers"
+      [user]="user"
+      appSelectable="user"
+      [item]="user"
+      draggable="true"
   ></app-user-item>
   <label>New User:
     <input #userName />

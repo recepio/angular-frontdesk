@@ -1,13 +1,9 @@
-// .service-name {
-//     margin-left: 30px;
-// }
-
-.row {
-    // margin: 20px;
-    padding-left: 20px;
-}
-
-.subarea {
-    border-right: 1px solid ButtonFace;
-    border-left: 1px solid ButtonFace;
+:host {
+  border-right: 1px solid ButtonFace;
+  border-left: 1px solid ButtonFace;
+  border-bottom: 1px solid ButtonFace;
+  display: block;
+  form {
+    padding: 6px 12px;
+  }
 }

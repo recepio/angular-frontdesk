@@ -1,39 +1,15 @@
-<!-- <header>Edit Canvas</header>
-<form method="dialog" (ngSubmit)="onSubmit()" #areaForm="ngForm">
-  <section class="form">
-    <div>
-      <label for="name-input">Name</label>
-      <div>
-        <input type="text" id="name-input" required [(ngModel)]="model.name" name="name" #name="ngModel">
-        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-          Name is required
-        </div>
+<form (ngSubmit)="onSubmit()" #areaForm="ngForm">
+  <div class="form-row">
+    <div class="col-3">
+      <label for="service-name-input">Service Name</label>
+      <input type="text" class="form-control" id="service-name-input" placeholder="Service Name" required [(ngModel)]="model.serviceName" name="serviceName" #serviceName="ngModel">
+      <div [hidden]="serviceName.valid || serviceName.pristine" class="valid-feedback">
+        Service Name is required
       </div>
     </div>
-  </section>
-  <menu>
-    <div>
-      <button type="button" class="btn-remove">Remove canvas</button>
-    </div>
-    <div>
-      <button type="submit" [disabled]="!areaForm.form.valid">Ok</button>
-      <button type="reset">Cancel</button>
-    </div>
-  </menu>
-</form> -->
-<form class="subarea" (ngSubmit)="onSubmit()" #areaForm="ngForm">
-  <div class="row">
-    <div class="col-md-3 service-name">
-      <label for="name-input">Service name</label>
-      <div>
-        <input type="text" id="name-input" required />
-      </div>
-    </div>
-    <div class="col-md-9">
-      <label for="des-input">Service descripton</label>
-      <div>
-        <input type="text" id="des-input" required />
-      </div>
+    <div class="col-3">
+      <label for="description-input">Service Description</label>
+      <input type="text" class="form-control" id="description-input" placeholder="Description" [(ngModel)]="model.description" name="description">
     </div>
   </div>
 </form>

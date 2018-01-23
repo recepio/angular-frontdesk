@@ -2,7 +2,7 @@ import { Inject, Injectable, Injector } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
@@ -31,7 +31,7 @@ export class EventService extends CollectionService<Event> {
       });
   }
 
-  delete(event: Event | number): Observable<Event> {
+  delete (event: Event | number): Observable<Event> {
     const resourceService: ResourceService = this.injector.get('resourceService');
 
     resourceService.items.forEach(resource => {
