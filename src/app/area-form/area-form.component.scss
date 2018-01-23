@@ -3,6 +3,11 @@
 // }
 
 .row {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    // margin: 20px;
+    padding-left: 20px;
+}
+
+.subarea {
+    border-right: 1px solid ButtonFace;
+    border-left: 1px solid ButtonFace;
 }
