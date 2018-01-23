@@ -1,7 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 
 import { AreaService } from '../area.service';
-import { AreaFormComponent } from '../area-form/area-form.component';
 import { Area } from '../area';
 import { SelectionService } from '../selection.service';
 
@@ -11,6 +10,26 @@ import { SelectionService } from '../selection.service';
   styleUrls: ['./areas.component.scss']
 })
 export class AreasComponent implements OnInit {
+
+  editing = false;
+  oldServiceName: string;
+  oldDescription: string;
+
+  @HostListener('document:click', ['$event']) clickedOutside(evt: MouseEvent) {
+    this.areaService.update(this.areaSelectionService.current);
+    this.editing = false;
+  }
+
+  @HostListener('click', ['$event']) onClick(evt: MouseEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+
+  @HostListener('keyup.escape', ['$event']) onEsc(evt: KeyboardEvent) {
+    this.editing = false;
+    this.areaSelectionService.current.serviceName = this.oldServiceName;
+    this.areaSelectionService.current.description = this.oldDescription;
+  }
 
   constructor(
     @Inject('areaService') public areaService: AreaService,
@@ -48,6 +67,12 @@ export class AreasComponent implements OnInit {
         this.areaService.update(a);
       }
     }
+  }
+
+  startEdit() {
+    this.editing = true;
+    this.oldServiceName = this.areaSelectionService.current.serviceName;
+    this.oldDescription = this.areaSelectionService.current.description;
   }
 
 }

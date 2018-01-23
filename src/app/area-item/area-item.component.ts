@@ -10,7 +10,7 @@ import { AreaService } from '../area.service';
 })
 export class AreaItemComponent implements OnInit {
 
-  editing: boolean;
+  editing = false;
   oldName: string;
 
   @Input() area: Area;
