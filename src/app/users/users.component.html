@@ -14,8 +14,9 @@
   <button (click)="add(userName.value); userName.value=''">
     add
   </button>
-  <div class="editor" *ngIf="openEditor">
+  <div class="editor" *ngIf="openEditor" [ngStyle] = "{'margin-top': yCoordinates+'px'}">
 
+      <input type="text" placeholder="name" [(ngModel)] = "userEdit.name">
       <input type="text" placeholder="email" [(ngModel)] = "userEdit.email">
       <select [(ngModel)]="userEdit.type">
         <option value="person">person</option>

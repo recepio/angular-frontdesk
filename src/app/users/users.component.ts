@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, HostListener } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user';
 import { UserService } from '../user.service';
@@ -12,6 +12,11 @@ export class UsersComponent {
 
   openEditor: boolean = false;
   userEdit: User;
+  yCoordinates: number;
+  @HostListener('dblclick', ['$event']) onDblClick(evt: MouseEvent) {
+        this.yCoordinates = MouseEvent.prototype.pageY;
+        console.log(this.yCoordinates);
+  }
 
   constructor(@Inject('userService') public userService: UserService) { }
 
@@ -23,8 +28,8 @@ export class UsersComponent {
   }
 
   edit(user: User): void{
-    this.openEditor = true;
     this.userEdit = user;
+    this.openEditor = true;
   }
 
   update() {
