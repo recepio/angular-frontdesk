@@ -2,14 +2,16 @@
   <div class="form-row">
     <div class="col-3">
       <label for="service-name-input">Service Name</label>
-      <input type="text" class="form-control" id="service-name-input" placeholder="Service Name" required [(ngModel)]="model.serviceName" name="serviceName" #serviceName="ngModel">
+      <input type="text" class="form-control" id="service-name-input" placeholder="Service Name" required [(ngModel)]="model.serviceName"
+        name="serviceName" #serviceName="ngModel">
       <div [hidden]="serviceName.valid || serviceName.pristine" class="valid-feedback">
         Service Name is required
       </div>
     </div>
     <div class="col-3">
       <label for="description-input">Service Description</label>
-      <input type="text" class="form-control" id="description-input" placeholder="Description" [(ngModel)]="model.description" name="description">
+      <input type="text" class="form-control" id="description-input" placeholder="Description" [(ngModel)]="model.description"
+        name="description">
     </div>
   </div>
 </form>

@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 
 import { AreaService } from '../area.service';
 import { Area } from '../area';
