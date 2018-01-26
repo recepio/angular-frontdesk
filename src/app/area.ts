@@ -1,4 +1,4 @@
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 
 import { Resource } from './resource';
 import { AreaService } from './area.service';
@@ -11,7 +11,7 @@ export class Area {
   resources: Resource[];
 
   constructor(areaService: AreaService) {
-    this.id = UUID.UUID();
+    this.id = uuid();
     this.order = areaService.items.length;
     let newName: string;
     let i = 0;

@@ -31,17 +31,17 @@ export class EventService extends CollectionService<Event> {
       });
   }
 
-    /*delete (event: Event | number): Observable<Event> {
-      const resourceService: ResourceService = this.injector.get('resourceService');
+  /*delete (event: Event | number): Observable<Event> {
+    const resourceService: ResourceService = this.injector.get('resourceService');
 
-      resourceService.items.forEach(resource => {
-        resource.events = resource.events.filter(e => e !== event);
-      });
+    resourceService.items.forEach(resource => {
+      resource.events = resource.events.filter(e => e !== event);
+    });
 
-      return super.delete(event);
-    }
+    return super.delete(event);
+  }*/
 
-    /** GET event by id. Return `undefined` when id not found */
+  /** GET event by id. Return `undefined` when id not found */
   /* getEventNo404<Data>(id: number): Observable<Event> {
     const url = `${this.eventsUrl}/?id=${id}`;
     return this.http.get<Event[]>(url)
