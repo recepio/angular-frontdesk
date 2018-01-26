@@ -1,6 +1,16 @@
 @import './variables';
 @import './mixins';
 
+@import
+'~bootstrap/scss/functions',
+'~bootstrap/scss/variables',
+'~bootstrap/scss/mixins',
+'~bootstrap/scss/print',
+'~bootstrap/scss/reboot',
+'~bootstrap/scss/type',
+'~bootstrap/scss/forms',
+'~bootstrap/scss/grid';
+
 *, *:after, *:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
