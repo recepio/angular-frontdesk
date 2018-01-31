@@ -31,7 +31,7 @@ export class EventService extends CollectionService<Event> {
       });
   }
 
-  delete (event: Event | number): Observable<Event> {
+  /*delete (event: Event | number): Observable<Event> {
     const resourceService: ResourceService = this.injector.get('resourceService');
 
     resourceService.items.forEach(resource => {
@@ -39,7 +39,7 @@ export class EventService extends CollectionService<Event> {
     });
 
     return super.delete(event);
-  }
+  }*/
 
   /** GET event by id. Return `undefined` when id not found */
   /* getEventNo404<Data>(id: number): Observable<Event> {

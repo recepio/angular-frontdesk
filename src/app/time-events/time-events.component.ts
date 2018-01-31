@@ -135,7 +135,7 @@ export class TimeEventsComponent implements OnInit {
   private insertUser(data, position) {
     position.x -= data.x;
     position.y -= data.y;
-    const model = this.eventService.getItem(data.id);
+    //const model = this.eventService.getItem(data.id);
     if (false) {
       /*model.set({
         x: position.x / this.scale,
