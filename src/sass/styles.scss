@@ -1,27 +1,32 @@
 @import './variables';
 @import './mixins';
 
-*, *:after, *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
+@import
+'~bootstrap/scss/functions',
+'~bootstrap/scss/variables',
+'~bootstrap/scss/mixins',
+'~bootstrap/scss/print',
+'~bootstrap/scss/reboot',
+'~bootstrap/scss/type',
+'~bootstrap/scss/forms',
+'~bootstrap/scss/grid';
+
 html, body {
   height: 100vh;
 }
 body {
-  font-family: -apple-system, system, sans-serif;
-  margin: 0;
   user-select: none;
 }
 input, textarea, [contenteditable=true] {
   user-select: text;
 }
-
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
 }
-
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
+}
+// TODO remove after material included
+dialog {
+  display: none;
 }

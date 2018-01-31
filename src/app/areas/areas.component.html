@@ -5,9 +5,12 @@
         [area]="area"
         appSelectable="area" [item]="area"
         dnd-sortable [sortableIndex]="i" (onDropSuccess)="areaDropped($event, area, i)"
+        (dblclick)="startEdit()"
     >
     </app-area-item>
   </div>
   <button (click)="add()">+</button>
   <div></div>
 </div>
+
+<app-area-form *ngIf="editing" [model]="areaSelectionService.current"></app-area-form>

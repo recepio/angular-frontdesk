@@ -14,7 +14,6 @@ export class AreaFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.model);
   }
 
   onSubmit() {
