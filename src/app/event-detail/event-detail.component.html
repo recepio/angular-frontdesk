@@ -1,6 +1,6 @@
 <div *ngIf="event">
   <h2>{{ event.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{event.id}}</div>
+  <div><span>id: </span>{{event._id}}</div>
   <div>
     <label>name:
       <input [(ngModel)]="event.name" placeholder="name">

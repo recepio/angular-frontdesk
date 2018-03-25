@@ -13,13 +13,13 @@ export class ResourceItemComponent implements OnInit {
   @Input() resource: Resource;
 
   constructor(
-    @Inject('resourceService') public resourceService: ResourceService
+    @Inject('resourceService') private resourceService: ResourceService
   ) { }
 
   ngOnInit() {
   }
 
-  delete(resource: Resource): void {
-    this.resourceService.delete(resource).subscribe();
+  remove(resource: Resource): void {
+    this.resourceService.remove(resource);
   }
 }

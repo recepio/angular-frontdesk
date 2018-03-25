@@ -1,22 +1,30 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { AreaService } from '../area.service';
 import { Area } from '../area';
 import { SelectionService } from '../selection.service';
+import { HoodieService } from '../hoodie.service';
 
 @Component({
   selector: 'app-areas',
   templateUrl: './areas.component.html',
   styleUrls: ['./areas.component.scss']
 })
-export class AreasComponent implements OnInit {
+export class AreasComponent implements OnInit, OnDestroy {
+  areas: Area[] = [];
 
   editing = false;
   oldServiceName: string;
   oldDescription: string;
 
+  private changeSubscription: Subscription;
+
   @HostListener('document:click', ['$event']) clickedOutside(evt: MouseEvent) {
-    this.areaService.update(this.areaSelectionService.current);
+    if (this.editing) {
+      this.areaService.update(this.areaSelectionService.current);
+    }
     this.editing = false;
   }
 
@@ -32,17 +40,69 @@ export class AreasComponent implements OnInit {
   }
 
   constructor(
-    @Inject('areaService') public areaService: AreaService,
-    @Inject('areaSelectionService') public areaSelectionService: SelectionService
+    @Inject('areaService') private areaService: AreaService,
+    @Inject('areaSelectionService') public areaSelectionService: SelectionService,
+    private hoodieService: HoodieService
   ) { }
 
+  trackByAreas(index: number, area: Area): string { return area._id; }
+
   ngOnInit() {
+    this.load();
   }
 
-  trackByAreas(index: number, area: Area): string { return area.id; }
+  private binarySearch(order: number) {
+    let low = 0, high = this.areas.length;
+    while (low < high) {
+      const mid = (low + high) >>> 1; // faster version of Math.floor((low + high) / 2)
+      this.areas[mid].order < order ? low = mid + 1 : high = mid;
+    }
+    return low;
+  }
+
+  private load() {
+    const filter = item => item.type === 'area';
+    this.areas = [];
+    this.hoodieService.fetch(filter).then(items => {
+      items = items.sort((a, b) => a.order - b.order);
+      this.areas = items;
+      if (this.areas.length) {
+        this.areaSelectionService.select(this.areas[0]);
+      }
+      console.log('areas loaded', items);
+
+      this.changeSubscription = this.hoodieService.changed$.subscribe(({ eventName, object }) => {
+        if (!filter(object)) {
+          return;
+        }
+        console.log('area', eventName, object);
+        if (eventName === 'add') {
+          const index = this.binarySearch(object.order);
+          this.areas.splice(index, 0, object);
+        } else {
+          const index = this.areas.findIndex(item => item._id === object._id);
+          if (eventName === 'update') {
+            if (object.order !== index) {
+              this.areas.splice(object.order, 0, this.areas.splice(index, 1)[0]);
+            } else {
+              Object.assign(this.areas[object.order], object);
+            }
+          } else if (eventName === 'remove') {
+            this.areas.splice(index, 1);
+          }
+        }
+      });
+    });
+  }
 
   add() {
-    const area = new Area(this.areaService);
+    let newName: string;
+    let i = 0;
+    do {
+      i++;
+      newName = `Area${i}`;
+    } while (this.areas.find(item => item.name === newName));
+    const area = new Area(newName, this.areas.length);
     this.areaService.add(area);
   }
 
@@ -50,19 +110,15 @@ export class AreasComponent implements OnInit {
     this.areaSelectionService.select(area);
     if (index < area.order) {
       const to = area.order;
-      area.order = -1;
-      this.areaService.update(area);
       for (let i = to; i >= index; i--) {
-        const a = this.areaService.items[i];
+        const a = this.areas[i];
         a.order = i;
         this.areaService.update(a);
       }
     } else {
       const from = area.order;
-      area.order = -1;
-      this.areaService.update(area);
       for (let i = from; i <= index; i++) {
-        const a = this.areaService.items[i];
+        const a = this.areas[i];
         a.order = i;
         this.areaService.update(a);
       }
@@ -73,6 +129,14 @@ export class AreasComponent implements OnInit {
     this.editing = true;
     this.oldServiceName = this.areaSelectionService.current.serviceName;
     this.oldDescription = this.areaSelectionService.current.description;
+  }
+
+  ngOnDestroy() {
+    console.log('areas destroy');
+    if (this.changeSubscription) {
+      this.changeSubscription.unsubscribe();
+      console.log('areas unsubscribed');
+    }
   }
 
 }

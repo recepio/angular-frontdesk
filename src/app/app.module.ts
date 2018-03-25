@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
@@ -6,11 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DndModule } from 'ng2-dnd';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
@@ -28,25 +24,19 @@ import { TimeEventsComponent } from './time-events/time-events.component';
 import { TimelineService } from './timeline.service';
 import { TimelineComponent } from './timeline/timeline.component';
 import { FillPipe } from './fill.pipe';
-import { MatchesResourcePipe } from './matches-resource.pipe';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserService } from './user.service';
 import { SelectableDirective } from './selectable.directive';
 import { UserItemComponent } from './user-item/user-item.component';
 import { AreaService } from './area.service';
 import { UsersComponent } from './users/users.component';
-import { IndexedDbService } from './indexed-db.service';
 import { MatchesUserPipe } from './matches-user.pipe';
 import { AreaFormComponent } from './area-form/area-form.component';
-import { DialogWrapperComponent } from './dialog-wrapper/dialog-wrapper.component';
-import { DialogService } from './dialog.service';
 import { AreaItemComponent } from './area-item/area-item.component';
 import { AutofocusDirective } from './autofocus.directive';
 import { AreasComponent } from './areas/areas.component';
-
-export function initIndexedDb(indexedDbService: IndexedDbService): Function {
-  return () => indexedDbService.open();
-}
+import { HoodieService } from './hoodie.service';
+import { TimeTableComponent } from './time-table/time-table.component';
 
 @NgModule({
   imports: [
@@ -54,13 +44,6 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
     DndModule.forRoot()
   ],
   declarations: [
@@ -76,17 +59,16 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     TimeEventsComponent,
     TimelineComponent,
     FillPipe,
-    MatchesResourcePipe,
     UserFormComponent,
     SelectableDirective,
     UserItemComponent,
     UsersComponent,
     MatchesUserPipe,
     AreaFormComponent,
-    DialogWrapperComponent,
     AreaItemComponent,
     AutofocusDirective,
-    AreasComponent
+    AreasComponent,
+    TimeTableComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
@@ -98,11 +80,9 @@ export function initIndexedDb(indexedDbService: IndexedDbService): Function {
     { provide: 'userSelectionService', useClass: SelectionService },
     { provide: 'resourceSelectionService', useClass: SelectionService },
     { provide: 'eventSelectionService', useClass: SelectionService },
-    { provide: APP_INITIALIZER, useFactory: initIndexedDb, deps: [IndexedDbService], multi: true },
     MessageService,
     TimelineService,
-    IndexedDbService,
-    DialogService
+    HoodieService
   ],
   bootstrap: [AppComponent]
 })

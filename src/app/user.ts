@@ -1,15 +1,13 @@
-import { v4 as uuid } from 'uuid';
+import { Item } from './item';
 
-export class User {
-
-  id: string;
+export class User extends Item {
   email: string;
   type: string;
   phoneNumber: string;
   citizenship: string;
 
   constructor(public name: string) {
-    this.id = uuid();
+    super();
   }
 
 }

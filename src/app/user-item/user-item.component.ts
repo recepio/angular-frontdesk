@@ -12,12 +12,12 @@ export class UserItemComponent implements OnInit {
 
   @Input() user: User;
 
-  @HostListener('dragstart', ['$event']) onDragStart(evt: DragEvent) {
-    console.log('dragstart', this.user.id);
+  @HostListener('dragstart', ['$event']) onDragStart(evt: Event | any) {
+    console.log('dragstart', this.user._id);
     const offsetX = evt.offsetX;
     const offsetY = evt.offsetY;
     const data = {
-      id: this.user.id,
+      id: this.user._id,
       x: offsetX,
       y: offsetY
     };
@@ -26,7 +26,7 @@ export class UserItemComponent implements OnInit {
     } catch (e) {
       // IE 11
     }
-    evt.dataTransfer.setData('text', `user ${this.user.id} ${offsetX} ${offsetY}`);
+    evt.dataTransfer.setData('text', `user ${this.user._id} ${offsetX} ${offsetY}`);
 
     evt.dataTransfer.effectAllowed = 'move';
   }
@@ -38,8 +38,8 @@ export class UserItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  delete(user: User): void {
-    this.userService.delete(user).subscribe();
+  remove(user: User): void {
+    this.userService.remove(user);
   }
 
 }

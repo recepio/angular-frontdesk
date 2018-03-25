@@ -29,7 +29,7 @@ export class AreaItemComponent implements OnInit {
     this.editing = false;
 
     if (this.area.name.length === 0) {
-      return this.areaService.delete(this.area);
+      return this.areaService.remove(this.area);
     }
 
     return this.areaService.update(this.area);

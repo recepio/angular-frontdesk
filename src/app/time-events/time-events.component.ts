@@ -1,28 +1,32 @@
-import { Component, Input, OnInit, Inject, HostListener, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, Inject, HostListener, ElementRef, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { SelectionService } from '../selection.service';
 import { Resource } from '../resource';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { TimelineService } from '../timeline.service';
-import { UserService } from '../user.service';
-import { ResourceService } from '../resource.service';
+import { HoodieService } from '../hoodie.service';
 
 @Component({
   selector: 'app-time-events',
   templateUrl: './time-events.component.html',
   styleUrls: ['./time-events.component.scss']
 })
-export class TimeEventsComponent implements OnInit {
+export class TimeEventsComponent implements OnInit, OnDestroy {
+  @Input() resource: Resource;
+
+  events: Event[] = [];
+
+  private changeSubscription: Subscription;
 
   private allowedTypes = [
     'application/x-recepio-frontdesk.user',
     'text/plain',
     'Text'];
 
-  @Input() resource: Resource;
-
-  @HostListener('dragover', ['$event']) onDragOver(evt: DragEvent) {
+  @HostListener('dragover', ['$event']) onDragOver(evt: Event | any) {
     console.log('dragover');
     for (let i = 0; i < evt.dataTransfer.types.length; i++) {
       const type = evt.dataTransfer.types[i];
@@ -35,7 +39,7 @@ export class TimeEventsComponent implements OnInit {
     }
   }
 
-  @HostListener('drop', ['$event']) onDrop(evt: DragEvent) {
+  @HostListener('drop', ['$event']) onDrop(evt: Event | any) {
     console.log('drop');
     for (let i = 0; i < this.allowedTypes.length; i++) {
       const type = this.allowedTypes[i];
@@ -84,20 +88,55 @@ export class TimeEventsComponent implements OnInit {
 
   constructor(
     private elRef: ElementRef,
-    @Inject('eventService') public eventService: EventService,
-    @Inject('userService') public userService: UserService,
-    @Inject('resourceService') public resourceService: ResourceService,
+    @Inject('eventService') private eventService: EventService,
     @Inject('eventSelectionService') private eventSelectionService: SelectionService,
-    @Inject('areaSelectionService') private areaSelectionService: SelectionService,
     private timelineService: TimelineService,
+    private hoodieService: HoodieService
   ) { }
 
+  trackByEvents(index: number, event: Event): string { return event._id; }
+
   ngOnInit() {
+    this.load();
   }
 
-  trackByEvents(index: number, event: Event): string { return event.id; }
+  private load() {
+    const filter = item => item.type === 'event' && item.resource === this.resource._id;
+    this.events = [];
+    this.hoodieService.fetch(filter).then(items => {
+      items.forEach(item => {
+        EventService.associate(item);
+      });
+      this.events = items;
+      console.log('events loaded', items);
 
-  private getPositionFromEvent(evt: DragEvent) {
+      this.changeSubscription = this.hoodieService.changed$.subscribe(({ eventName, object }) => {
+        if (!filter(object)) {
+          return;
+        }
+        console.log('event', eventName, object);
+        if (['add', 'update'].includes(eventName)) {
+          EventService.associate(object);
+        }
+        if (eventName === 'add') {
+          this.events.push(object);
+        } else {
+          const index = this.events.findIndex(item => item._id === object._id);
+          if (eventName === 'update') {
+            if (object.order !== index) {
+              this.events.splice(object.order, 0, this.events.splice(index, 1)[0]);
+            } else {
+              Object.assign(this.events[object.order], object);
+            }
+          } else if (eventName === 'remove') {
+            this.events.splice(index, 1);
+          }
+        }
+      });
+    });
+  }
+
+  private getPositionFromEvent(evt: Event | any) {
     let offsetX = this.elRef.nativeElement.offsetLeft;
     let offsetY = this.elRef.nativeElement.offsetTop;
 
@@ -143,14 +182,20 @@ export class TimeEventsComponent implements OnInit {
       });
       return model;*/
     } else {
-      const event = new Event();
-      event.users = [ this.userService.items.find(user => user.id === data.id) ];
-      event.date = new Date(this.timelineService.startFrom.getTime() +
+      const date = new Date(this.timelineService.startFrom.getTime() +
         (position.x / this.timelineService.dayWidth * 24 * 60 * 60 * 1000));
-      event.duration = { days: 3 };
-      this.resource.events.push(event);
+      const event = new Event(this.resource._id, date, 3 * 24 * 60 * 60 * 1000);
+      event.users = [data.id];
       this.eventService.add(event);
       return event;
+    }
+  }
+
+  ngOnDestroy() {
+    console.log('events destroy');
+    if (this.changeSubscription) {
+      this.changeSubscription.unsubscribe();
+      console.log('events unsubscribed');
     }
   }
 

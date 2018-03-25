@@ -1,45 +1,23 @@
-import { Inject, Injectable, Injector } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import {catchError, map, tap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { UserService } from './user.service';
-import { ResourceService } from './resource.service';
-import { IndexedDbService } from './indexed-db.service';
+import { HoodieService } from './hoodie.service';
 
 @Injectable()
 export class EventService extends CollectionService<Event> {
 
-  constructor(
-    protected indexedDbService: IndexedDbService,
-    protected messageService: MessageService,
-    @Inject('userService') private userService: UserService,
-    private injector: Injector
-  ) {
-    super('events', indexedDbService, messageService);
-    this.get()
-      .subscribe(items => {
-        items.forEach(event => {
-          event.date = new Date(event.date);
-          event.users = this.userService.items.filter(user => event['user_ids'].includes(user.id));
-        });
-        this.items = items;
-      });
+  static associate(event: Event) {
+    event.date = new Date(event.date);
   }
 
-  /*delete (event: Event | number): Observable<Event> {
-    const resourceService: ResourceService = this.injector.get('resourceService');
-
-    resourceService.items.forEach(resource => {
-      resource.events = resource.events.filter(e => e !== event);
-    });
-
-    return super.delete(event);
-  }*/
+  constructor(
+    protected hoodieService: HoodieService,
+    protected messageService: MessageService
+  ) {
+    super('event', hoodieService, messageService);
+  }
 
   /** GET event by id. Return `undefined` when id not found */
   /* getEventNo404<Data>(id: number): Observable<Event> {

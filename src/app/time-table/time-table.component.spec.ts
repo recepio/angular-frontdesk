@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogWrapperComponent } from './dialog-wrapper.component';
+import { TimeTableComponent } from './time-table.component';
 
-describe('DialogWrapperComponent', () => {
-  let component: DialogWrapperComponent;
-  let fixture: ComponentFixture<DialogWrapperComponent>;
+describe('TimeTableComponent', () => {
+  let component: TimeTableComponent;
+  let fixture: ComponentFixture<TimeTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogWrapperComponent ]
+      declarations: [ TimeTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogWrapperComponent);
+    fixture = TestBed.createComponent(TimeTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
-import { of } from 'rxjs/observable/of';
-import { catchError, tap } from 'rxjs/operators';
-
 import { CollectionService } from './collection.service';
 import { MessageService } from './message.service';
 import { User } from './user';
-import { IndexedDbService } from './indexed-db.service';
+import { HoodieService } from './hoodie.service';
 
 @Injectable()
 export class UserService extends CollectionService<User> {
 
   constructor(
-    protected indexedDbService: IndexedDbService,
+    protected hoodieService: HoodieService,
     protected messageService: MessageService
   ) {
-    super('users', indexedDbService, messageService);
-    this.get()
-      .subscribe(items => this.items = items);
+    super('user', hoodieService, messageService);
   }
 
-  search(term: string): Observable<User[]> {
+  /*search(term: string): Observable<User[]> {
     if (!term.trim()) {
       return of(this.items);
     }
@@ -30,6 +23,6 @@ export class UserService extends CollectionService<User> {
       tap(_ => console.log(`found users matching "${term}"`, _)),
       catchError(this.handleError<User[]>('searchUsers', []))
     );
-  }
+  }*/
 
 }

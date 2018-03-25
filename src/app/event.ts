@@ -1,8 +1,10 @@
 import { Item } from './item';
-import { User } from './user';
 
 export class Event extends Item {
-  users: User[];
-  date: Date;
-  duration: any;
+  users: string[];
+
+  constructor(public resource: string, public date: Date, public duration: number) {
+    super();
+  }
+
 }

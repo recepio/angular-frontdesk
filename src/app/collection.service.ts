@@ -1,61 +1,37 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
-import { IndexDetails } from 'angular2-indexeddb';
+import 'rxjs/add/observable/fromPromise';
 
 import { Item } from './item';
 import { MessageService } from './message.service';
-import { IndexedDbService } from './indexed-db.service';
+import { HoodieService } from './hoodie.service';
 
 export abstract class CollectionService<T extends Item> {
 
-  items: T[] = [];
+  constructor(protected type: string, protected hoodieService: HoodieService, protected messageService: MessageService) { }
 
-  constructor(private name: string, protected indexedDbService: IndexedDbService, protected messageService: MessageService) { }
-
-  get (indexDetails?: IndexDetails): Observable<T[]> {
-    return Observable.fromPromise(this.indexedDbService.db.getAll(this.name, null, indexDetails))
-      .pipe(
-        tap(_ => this.log(`fetched ${this.name}`)),
-        catchError(this.handleError(`get(${this.name})`, []))
-      );
-  }
-
-  /*getItem (id: number): Observable<T> {
-    const url = `api/${this.name}/${id}`;
-    return this.http.get<T>(url).pipe(
-      tap(_ => this.log(`fetched ${this.name} id=${id}`)),
-      catchError(this.handleError<T>(`get(${this.name}) id=${id}`))
+  add(item: T): Observable<T> {
+    return Observable.fromPromise(this.hoodieService.add(this.type, item)).pipe(
+      tap(() => this.log(`added ${this.type} w/ id=${item._id}`)),
+      catchError(this.handleError(`add(${this.type})`))
     );
-  }*/
+  }
 
-  add (item: T): Observable<T> {
-    this.items.push(item);
-
-    return Observable.fromPromise(this.indexedDbService.db.add(this.name, item))
+  update(item: T): Observable<any> {
+    console.log('update', item);
+    return Observable.fromPromise(this.hoodieService.update(item))
       .pipe(
-        tap(_ => this.log(`added ${this.name} w/ id=${item.id}`)),
-        catchError(this.handleError<T>(`add(${this.name})`))
+        tap(() => this.log(`updated ${this.type} id=${item._id}`)),
+        catchError(this.handleError(`update(${this.type})`))
       );
   }
 
-  update (item: T): Observable<any> {
-    return Observable.fromPromise(this.indexedDbService.db.update(this.name, item))
+  remove(item: T): Observable<T> {
+    return Observable.fromPromise(this.hoodieService.remove(item))
       .pipe(
-        tap(_ => this.log(`updated ${this.name} id=${item.id}`)),
-        catchError(this.handleError<any>(`update(${this.name})`))
-      );
-  }
-
-  delete (item: T | string): Observable<T> {
-    const id = typeof item === 'string' ? item : item.id;
-
-    this.items = this.items.filter(h => h.id !== id);
-
-    return Observable.fromPromise(this.indexedDbService.db.delete(this.name, id))
-      .pipe(
-        tap(_ => this.log(`deleted ${this.name} id=${id}`)),
-        catchError(this.handleError<T>(`delete(${this.name})`))
+        tap(() => this.log(`deleted ${this.type} id=${item._id}`)),
+        catchError(this.handleError(`delete(${this.type})`))
       );
   }
 
@@ -65,7 +41,7 @@ export abstract class CollectionService<T extends Item> {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  protected handleError<T> (operation = 'operation', result?: T) {
+  protected handleError(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -80,6 +56,7 @@ export abstract class CollectionService<T extends Item> {
   }
 
   protected log(message: string) {
-    this.messageService.add(`(${this.name})Service: ${message}`);
+    this.messageService.add(`(${this.type})Service: ${message}`);
   }
+
 }

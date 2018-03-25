@@ -1,7 +1,7 @@
 <input type="search" placeholder="Filter" #searchBox (input)="search(searchBox.value)">
 <div class="users">
   <app-user-item
-      *ngFor="let user of userService.items | matchesUser: searchBox.value; trackBy: trackByUsers"
+      *ngFor="let user of users | matchesUser: searchBox.value; trackBy: trackByUsers"
       [user]="user"
       appSelectable="user"
       [item]="user"
@@ -9,9 +9,9 @@
       (dblclick)="edit(user)"
   ></app-user-item>
   <label>New User:
-    <input #userName />
+    <input (keyup.enter)="add(userName.value);userName.value=''" #userName />
   </label>
-  <button (click)="add(userName.value); userName.value=''">
+  <button (click)="add(userName.value);userName.value=''">
     add
   </button>
   <div class="editor" *ngIf="openEditor" [ngStyle] = "{'margin-top': yCoordinates+'px'}">
