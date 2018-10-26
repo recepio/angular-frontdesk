@@ -1,0 +1,9 @@
+@import '~sass/mixins';
+
+:host {
+  display: block;
+  margin: 3px;
+  &.selected {
+    @include selected();
+  }
+}

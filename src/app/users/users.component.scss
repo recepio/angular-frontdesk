@@ -1,0 +1,14 @@
+:host {
+  width: 240px;
+  position: relative;
+  .editor{
+    background-color: #ffffff;
+    position: absolute;
+    top: -50px;
+    left: 0;
+    height: 100%;
+  }
+  input,select{
+    width: 100%;
+  }
+}

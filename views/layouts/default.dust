@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #eee;
+            }
+
+            li {
+            float: left;
+            }
+
+            li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+            }
+
+            li a:hover {
+            background-color: #111111;
+            color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h2>Navigation Menu</h2>
+
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Pricing</a></li>
+            <li><a href="/">Developers</a></li>
+            <li><a href="/">Downloads</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/login">Sign up</a></li>
+        </ul>
+        {+body/}
+    </body>
+</html>

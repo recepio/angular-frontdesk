@@ -1,0 +1,35 @@
+.area-region {
+  display: flex;
+  > button, .areas > app-area-item {
+    border-right-width: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .areas {
+    display: flex;
+    > app-area-item {
+      cursor: default;
+      position: relative;
+      &:focus {
+        outline: none;
+      }
+      &.current {
+        border-bottom-color: transparent;
+      }
+      ::ng-deep input {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        margin: 2px -8px;
+      }
+    }
+  }
+  > button {
+    border-right-width: 1px;
+    margin: 0;
+  }
+  > div:last-child {
+    flex-grow: 1;
+    border-bottom: 1px solid ButtonFace;
+  }
+}

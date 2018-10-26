@@ -1,0 +1,12 @@
+:host {
+  flex-grow: 1;
+  display: flex;
+  min-height: 0;
+  .event-region {
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+}

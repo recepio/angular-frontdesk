@@ -1,0 +1,30 @@
+<input type="search" placeholder="Filter" #searchBox (input)="search(searchBox.value)">
+<div class="users">
+  <app-user-item
+      *ngFor="let user of users | matchesUser: searchBox.value; trackBy: trackByUsers"
+      [user]="user"
+      appSelectable="user"
+      [item]="user"
+      draggable="true"
+      (dblclick)="edit(user)"
+  ></app-user-item>
+  <label>New User:
+    <input (keyup.enter)="add(userName.value);userName.value=''" #userName />
+  </label>
+  <button (click)="add(userName.value);userName.value=''">
+    add
+  </button>
+  <div class="editor" *ngIf="openEditor" [ngStyle] = "{'margin-top': yCoordinates+'px'}">
+
+      <input type="text" placeholder="name" [(ngModel)] = "userEdit.name">
+      <input type="text" placeholder="email" [(ngModel)] = "userEdit.email">
+      <select [(ngModel)]="userEdit.type">
+        <option value="person">person</option>
+        <option value="company">company</option>
+      </select>
+      <input type="text" placeholder="phone number" [(ngModel)] = "userEdit.phoneNumber">
+      <input type="text" placeholder="citizenship" [(ngModel)] = "userEdit.citizenship">
+      <button (click)="update()">Update</button>
+      <button (click)="cancel()">cancel</button>
+  </div>
+</div>

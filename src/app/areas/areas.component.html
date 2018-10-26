@@ -1,0 +1,16 @@
+<div class="area-region">
+  <div class="areas" dnd-sortable-container [sortableData]="areas">
+    <app-area-item class="btn"
+        *ngFor="let area of areas; trackBy: trackByAreas; let i = index"
+        [area]="area"
+        appSelectable="area" [item]="area"
+        dnd-sortable [sortableIndex]="i" (onDropSuccess)="areaDropped($event, area, i)"
+        (dblclick)="startEdit()"
+    >
+    </app-area-item>
+  </div>
+  <button class="btn" (click)="add()">+</button>
+  <div></div>
+</div>
+
+<app-area-form *ngIf="editing" [model]="areaSelectionService.current"></app-area-form>
