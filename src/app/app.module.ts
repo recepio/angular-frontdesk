@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 
 import { DndModule } from 'ng2-dnd';
 
 import { AppRoutingModule } from './app-routing.module';
+import { AuthEffects } from './store/effects/auth.effects';
+import { reducers } from './store/reducers/auth.reducers';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
@@ -37,14 +42,20 @@ import { AutofocusDirective } from './autofocus.directive';
 import { AreasComponent } from './areas/areas.component';
 import { HoodieService } from './hoodie.service';
 import { TimeTableComponent } from './time-table/time-table.component';
+import { AuthLoginComponent } from './auth/auth-login/auth-login.component';
+import { AuthCompanyEmailComponent } from './auth/auth-company-email/auth-company-email.component';
+import { AuthCompanyComponent } from './auth/auth-company/auth-company.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   declarations: [
     AppComponent,
@@ -68,7 +79,10 @@ import { TimeTableComponent } from './time-table/time-table.component';
     AreaItemComponent,
     AutofocusDirective,
     AreasComponent,
-    TimeTableComponent
+    TimeTableComponent,
+    AuthLoginComponent,
+    AuthCompanyEmailComponent,
+    AuthCompanyComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
@@ -80,7 +94,7 @@ import { TimeTableComponent } from './time-table/time-table.component';
     { provide: 'userSelectionService', useClass: SelectionService },
     { provide: 'resourceSelectionService', useClass: SelectionService },
     { provide: 'eventSelectionService', useClass: SelectionService },
-    MessageService,
+      MessageService,
     TimelineService,
     HoodieService
   ],

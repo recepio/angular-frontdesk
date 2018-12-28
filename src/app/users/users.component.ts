@@ -1,5 +1,4 @@
-import { Component, Inject, HostListener, OnInit, OnDestroy } from '@angular/core';
-
+import {Component, Inject, HostListener, OnInit, OnDestroy, inject} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { User } from '../user';
@@ -42,7 +41,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.hoodieService.fetch(filter).then(items => {
       this.users = items;
       console.log('users loaded', items);
-
       this.changeSubscription = this.hoodieService.changed$.subscribe(({ eventName, object }) => {
         if (!filter(object)) {
           return;
@@ -73,8 +71,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.userService.update(this.userEdit);
-    this.openEditor = false;
+    this.userService.update(this.userEdit).
+      subscribe((x) => {console.log(x)}, (e) => {console.log(e)}, () => this.openEditor = false);
   }
 
   cancel() {
