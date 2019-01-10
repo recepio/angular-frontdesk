@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -10,8 +10,6 @@ import { StoreModule } from '@ngrx/store';
 import { DndModule } from 'ng2-dnd';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AuthEffects } from './store/effects/auth.effects';
-import { reducers } from './store/reducers/auth.reducers';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
@@ -45,6 +43,12 @@ import { TimeTableComponent } from './time-table/time-table.component';
 import { AuthLoginComponent } from './auth/auth-login/auth-login.component';
 import { AuthCompanyEmailComponent } from './auth/auth-company-email/auth-company-email.component';
 import { AuthCompanyComponent } from './auth/auth-company/auth-company.component';
+import { AuthSignUpComponent } from './auth/auth-sign-up/auth-sign-up.component';
+import {AuthLoginEffects} from './store/effects/auth.login.effects';
+import {reducers} from './store';
+import {ErrorInterceptor, TokenInterceptor} from './services/token-interceptor';
+import {AuthSignUpEffects} from './store/effects/auth.signup.effects';
+import {WorkspaceEffects} from './store/effects/workspace.effects';
 
 @NgModule({
   imports: [
@@ -55,7 +59,7 @@ import { AuthCompanyComponent } from './auth/auth-company/auth-company.component
     HttpClientModule,
     DndModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthLoginEffects, AuthSignUpEffects, WorkspaceEffects]),
   ],
   declarations: [
     AppComponent,
@@ -82,10 +86,13 @@ import { AuthCompanyComponent } from './auth/auth-company/auth-company.component
     TimeTableComponent,
     AuthLoginComponent,
     AuthCompanyEmailComponent,
-    AuthCompanyComponent
+    AuthCompanyComponent,
+    AuthSignUpComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: 'areaService', useClass: AreaService },
     { provide: 'eventService', useClass: EventService },
     { provide: 'resourceService', useClass: ResourceService },
@@ -94,7 +101,7 @@ import { AuthCompanyComponent } from './auth/auth-company/auth-company.component
     { provide: 'userSelectionService', useClass: SelectionService },
     { provide: 'resourceSelectionService', useClass: SelectionService },
     { provide: 'eventSelectionService', useClass: SelectionService },
-      MessageService,
+    MessageService,
     TimelineService,
     HoodieService
   ],

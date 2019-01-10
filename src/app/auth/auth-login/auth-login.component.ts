@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { User } from '../../models/user';
-import { AppState } from '../../store/reducers/auth.reducers';
-import { Login } from '../../store/actions/auth.actions';
+import { AppState } from '../../store';
+import { Login } from '../../store/actions/auth.login.actions';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth-login',
@@ -12,19 +14,27 @@ import { Login } from '../../store/actions/auth.actions';
 })
 export class AuthLoginComponent implements OnInit {
 
-  user: User = new User();
+  userForm: FormGroup;
+  emailCtrl: FormControl;
+  passwordCtrl: FormControl;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, fb: FormBuilder, private _authService: AuthService, private _router: Router) {
+      this.emailCtrl = fb.control('', Validators.required);
+      this.passwordCtrl = fb.control('', Validators.required);
+      this.userForm = fb.group({
+          email: this.emailCtrl,
+          password: this.passwordCtrl
+      });
+  }
 
   ngOnInit() {
+      if(this._authService.getToken()){
+          this._router.navigate(['/company/add']);
+      }
   }
 
   onSubmit(): void {
-      console.log(this.user);
-      const payload = {
-            email: this.user.email,
-            password: this.user.password
-      };
+      const payload = this.userForm.value;
       this.store.dispatch(new Login(payload));
-    }
+  }
 }
