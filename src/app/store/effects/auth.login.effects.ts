@@ -45,7 +45,7 @@ export class AuthLoginEffects <T extends Item> {
     @Effect({dispatch: false})
     LoginSuccess: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.LOGIN_SUCCESS),
-        tap((user) => {
+        tap((user: any) => {
             localStorage.setItem('token', user.payload.token);
             this.router.navigateByUrl('/company/add');
         }),

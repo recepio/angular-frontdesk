@@ -5,7 +5,7 @@
 		<a *ngIf="!isAuthenticated" routerLink="/">Home</a>
 		<a *ngIf="!isAuthenticated" routerLink="/signup">Register</a>
 		<a *ngIf="isAuthenticated" routerLink="/company/add">add Workspace</a>
-        <a *ngFor="let workspace of workspaces" [routerLink]="[workspace.name,'events']">{{workspace.name}}</a>
+        <a *ngFor="let workspace of workspaces" [routerLink]="[workspace.uuid,'events']">{{workspace.name}}</a>
 		<!--<a *ngIf="workspace" routerLink="/dashboard">Dashboard</a>
 		<a *ngIf="workspace" routerLink="['/events']">Events</a>-->
 	</nav>

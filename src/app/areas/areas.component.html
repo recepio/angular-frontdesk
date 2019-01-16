@@ -9,9 +9,114 @@
     >
     </app-area-item>
   </div>
-  <button class="btn" (click)="add()">+</button>
-  <button class=" btn-primary" >add User to workspace</button>
+  <button class="btn-primary" (click)="openModal('area-modal')">Sections</button>
+  <button class=" btn-primary" (click)="openModal('user-modal')">Users</button>
+  <button class=" btn-primary" (click)="openModal('resource-modal')">Resources</button>
   <div></div>
 </div>
 
 <app-area-form *ngIf="editing" [model]="areaSelectionService.current"></app-area-form>
+
+<app-modal id="area-modal" title="Company sections" >
+ <div class="login-form">
+  <div class="">
+    <form id="sections" (ngSubmit)="addArea()" [formGroup]="areaForm" >
+      <div class="form-group">
+        <input type="email" class="form-control" id="inputName" placeholder="Section name" formControlName="name">
+        <div *ngIf="areaNameCtrl.dirty && areaNameCtrl.hasError('required')">Username is
+          required</div>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" id="inputDescriptiob" placeholder="description" formControlName="description">
+        <div *ngIf="areaDescriptionCtrl.dirty && areaDescriptionCtrl.hasError('required')">Username is
+          required</div>
+      </div>
+      <button type="submit" [disabled]="areaForm.invalid" class="btn btn-primary gray">Add</button>
+
+    </form>
+  </div>
+  </div>
+</app-modal>
+
+<app-modal id="user-modal" title="Workspace Users" >
+  <span *ngFor="let user of users" style="padding: 5px">{{user | json}}</span>
+  <div class="login-form">
+    <div class="">
+      <form id="Users" (ngSubmit)="addUser()" [formGroup]="userForm" >
+        <div class="form-group">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" formControlName="email">
+          <div *ngIf="userEmailCtrl.dirty && userEmailCtrl.hasError('required')">Username is
+            required</div>
+        </div>
+        <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary gray">Add</button>
+
+      </form>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal id="resource-modal" title="Section Resources" >
+  <app-tabs>
+    <app-tab [tabTitle]="'Resource'">
+      <div class="login-form">
+        <div class="">
+          <form id="resource_description" >
+            <div class="form-group">
+              <input type="email" class="form-control"  placeholder="Resource name" >
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="General description" >
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control"  placeholder="Number of instances" >
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control"  placeholder="booking capacity index" >
+            </div>
+            <button type="submit" [disabled]="areaForm.invalid" class="btn btn-primary gray">Add</button>
+
+          </form>
+        </div>
+      </div>
+    </app-tab>
+    <app-tab [tabTitle]="'Descriptions'">
+      <div class="login-form">
+        <div class="">
+          <form id="resource_descriptions" >
+            <div class="form-group">
+              <input type="email" class="form-control"  placeholder="description key" >
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="description value" >
+            </div>
+            <button type="submit" [disabled]="areaForm.invalid" class="btn btn-primary gray">Add</button>
+          </form>
+        </div>
+      </div>
+    </app-tab>
+    <app-tab [tabTitle]="'Prices'">
+      <div class="login-form">
+        <div class="">
+          <form id="resource_prices" >
+            <div class="form-group">
+              <input type="money" class="form-control"  placeholder="Pricing name" >
+            </div>
+            <div class="form-group">
+              <input type="money" class="form-control"  placeholder="Fixed charge" >
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Resource booking class" >
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Period of use" >
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="discount" >
+            </div>
+            <button type="submit" [disabled]="areaForm.invalid" class="btn btn-primary gray">Add</button>
+          </form>
+        </div>
+      </div>
+    </app-tab>
+  </app-tabs>
+</app-modal>

@@ -1,11 +1,19 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
+import {Component, HostListener, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
 import { AreaService } from '../area.service';
+import { ModalService } from '../services/modal.service';
 import { Area } from '../area';
 import { SelectionService } from '../selection.service';
 import { HoodieService } from '../hoodie.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {WorkspaceService} from '../services/workspace.service';
+import {WorkSpaceDescriptionService} from '../services/work-space-description.service';
+import {AppState, selectAuthState} from '../store';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {User} from '../user';
 
 @Component({
   selector: 'app-areas',
@@ -13,7 +21,18 @@ import { HoodieService } from '../hoodie.service';
   styleUrls: ['./areas.component.scss']
 })
 export class AreasComponent implements OnInit, OnDestroy {
-  areas: Area[] = [];
+
+  @Input() areas: Area[];
+  userForm: FormGroup;
+  userEmailCtrl: FormControl;
+  companyCtrl: FormControl;
+  areaForm: FormGroup;
+  areaNameCtrl: FormControl;
+  areaDescriptionCtrl: FormControl;
+  getState: Observable<any>;
+  users: User[];
+
+  @Input() companyId: string;
 
   editing = false;
   oldServiceName: string;
@@ -42,13 +61,38 @@ export class AreasComponent implements OnInit, OnDestroy {
   constructor(
     @Inject('areaService') private areaService: AreaService,
     @Inject('areaSelectionService') public areaSelectionService: SelectionService,
+    private modalService: ModalService,
+    private _workSpaceService: WorkspaceService,
+    private  _descriptionService: WorkSpaceDescriptionService,
+    private  fb: FormBuilder,
+    private store: Store<AppState>,
     private hoodieService: HoodieService
-  ) { }
+  ) {
+      this.getState = this.store.select(selectAuthState);
+      this.getState.subscribe((state) => {
+          this.users = state.workSpace;
+          console.log(state);
+      });
+  }
 
   trackByAreas(index: number, area: Area): string { return area._id; }
 
   ngOnInit() {
-    this.load();
+      this.userEmailCtrl = this.fb.control('', Validators.required);
+      this.companyCtrl = this.fb.control(this.companyId, Validators.required);
+      this.areaNameCtrl = this.fb.control('', Validators.required);
+      this.areaDescriptionCtrl = this.fb.control('', Validators.required);
+      this.userForm = this.fb.group({
+          email: this.userEmailCtrl,
+          companyUuid: this.companyCtrl
+      });
+      this.areaForm = this.fb.group({
+          name: this.areaNameCtrl,
+          description: this.areaDescriptionCtrl,
+          companyUuid: this.companyCtrl
+      });
+
+      /*this.load();*/
   }
 
   private binarySearch(order: number) {
@@ -139,4 +183,27 @@ export class AreasComponent implements OnInit, OnDestroy {
     }
   }
 
+  openModal(id: string) {
+     this.modalService.open(id)
+  }
+
+  closeModal(id: string) {
+     this.modalService.close(id);
+  }
+
+  addUser(): void{
+      this._workSpaceService.addUser(this.userForm.value, {companyId: this.companyId})
+          .subscribe(
+              (data) => {console.log(data)},
+              (error) => {console.log(error.error)}
+          );
+  }
+
+  addArea(): void{
+      this._descriptionService.addArea(this.areaForm.value, {companyId: this.companyId})
+          .subscribe(
+              (data) => {console.log(data)},
+              (error) => {console.log(error.error)}
+          );
+  }
 }

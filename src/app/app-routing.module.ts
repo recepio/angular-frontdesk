@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'company/add/user', component: AuthCompanyEmailComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'detail/:id', component: EventDetailComponent, canActivate: [AuthGuardService] },
-  { path: ':workspaceName/events', component: EventsComponent, canActivate: [AuthGuardService] }
+  { path: ':workspaceId/events', component: EventsComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

@@ -31,13 +31,19 @@ export function loginReducer(state = initialState, action: AllLogin): State {
                     email: action.payload.user.email
                 },
                 workSpaces: action.payload.users
-            }
+            };
         };
         case AuthActionTypes.CREATE_WORKSPACE_SUCCESS: {
             state.workSpaces.push(action.payload.workspace);
             return {
                 ...state,
                 workSpace: action.payload.workspace
+            };
+        };
+        case AuthActionTypes.LOAD_WORKSPACE_USERS: {
+            return {
+                ...state,
+                workSpace: action.payload
             };
         };
         case AuthActionTypes.LOGOUT: {

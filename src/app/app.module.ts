@@ -44,11 +44,15 @@ import { AuthLoginComponent } from './auth/auth-login/auth-login.component';
 import { AuthCompanyEmailComponent } from './auth/auth-company-email/auth-company-email.component';
 import { AuthCompanyComponent } from './auth/auth-company/auth-company.component';
 import { AuthSignUpComponent } from './auth/auth-sign-up/auth-sign-up.component';
+import { ModalComponent } from './modal/modal.component';
 import {AuthLoginEffects} from './store/effects/auth.login.effects';
 import {reducers} from './store';
 import {ErrorInterceptor, TokenInterceptor} from './services/token-interceptor';
 import {AuthSignUpEffects} from './store/effects/auth.signup.effects';
 import {WorkspaceEffects} from './store/effects/workspace.effects';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabComponent } from './tab/tab.component';
+import { PanelComponent } from './panel/panel.component';
 
 @NgModule({
   imports: [
@@ -87,7 +91,11 @@ import {WorkspaceEffects} from './store/effects/workspace.effects';
     AuthLoginComponent,
     AuthCompanyEmailComponent,
     AuthCompanyComponent,
-    AuthSignUpComponent
+    AuthSignUpComponent,
+    ModalComponent,
+    TabsComponent,
+    TabComponent,
+    PanelComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

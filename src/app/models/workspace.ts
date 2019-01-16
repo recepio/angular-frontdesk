@@ -1,5 +1,5 @@
 export class workSpace {
-    id?: string;
+    uuid?: string;
     name?: string;
     description?: string;
     location?: string;

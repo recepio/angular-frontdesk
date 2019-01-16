@@ -1,0 +1,26 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.flex{
+  display: flex;
+  flex-direction: column;
+}
+.tab-close {
+  color: gray;
+  text-align: right;
+  cursor: pointer;
+}
+.nav>li>a {
+   position: relative;
+   display: block;
+   padding: 10px 15px;
+}
+li.active >a {
+  color: white;
+}
+
+li.active {
+  background-color: darkgrey;
+  color: white;
+}

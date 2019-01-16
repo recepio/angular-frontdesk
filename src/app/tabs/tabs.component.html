@@ -1,0 +1,10 @@
+<div class="flex-container">
+  <ul class="nav nav-tabs flex" style="flex-grow: 1">
+    <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+      <a [routerLink]="">{{tab.title}}</a>
+    </li>
+  </ul>
+  <div style="flex-grow: 3">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -30,7 +30,7 @@ export class WorkspaceEffects  {
                 return this.workSpaceService.createWorkspace(payload)
                     .pipe(
                         map((data) => {
-                            this.router.navigateByUrl('/company/add/user');
+                            this.router.navigateByUrl(`${data.workspace.uuid}/events`);
                             return new CreateSuccess({workspace: data.workspace});
                         }),
                         catchError((error: any) => of(new LoginFailure(error)))
