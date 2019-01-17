@@ -12,9 +12,9 @@ export class CreateSuccess implements Action {
     constructor(public payload: any) {}
 }
 
-export class LoadUsers implements Action {
-    readonly type = AuthActionTypes.LOAD_WORKSPACE_USERS;
+export class LoadWorkSpace implements Action {
+    readonly type = AuthActionTypes.LOAD_WORKSPACE;
     constructor(public payload: any){}
 }
 
-export type WORKSPACE = | CreateWorkspace | CreateSuccess | LoadUsers;
+export type WORKSPACE = | CreateWorkspace | CreateSuccess | LoadWorkSpace;

@@ -40,10 +40,11 @@ export function loginReducer(state = initialState, action: AllLogin): State {
                 workSpace: action.payload.workspace
             };
         };
-        case AuthActionTypes.LOAD_WORKSPACE_USERS: {
+        case AuthActionTypes.LOAD_WORKSPACE: {
             return {
                 ...state,
-                workSpace: action.payload
+                workSpace: action.payload.users,
+                areas:  action.payload.areas
             };
         };
         case AuthActionTypes.LOGOUT: {

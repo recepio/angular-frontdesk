@@ -22,7 +22,7 @@ import {User} from '../user';
 })
 export class AreasComponent implements OnInit, OnDestroy {
 
-  @Input() areas: Area[];
+  areas: Area[];
   userForm: FormGroup;
   userEmailCtrl: FormControl;
   companyCtrl: FormControl;
@@ -69,15 +69,23 @@ export class AreasComponent implements OnInit, OnDestroy {
     private hoodieService: HoodieService
   ) {
       this.getState = this.store.select(selectAuthState);
-      this.getState.subscribe((state) => {
-          this.users = state.workSpace;
-          console.log(state);
-      });
   }
 
   trackByAreas(index: number, area: Area): string { return area._id; }
 
   ngOnInit() {
+      this.initialiseForms();
+      this.getState.subscribe((state) => {
+          this.users = state.workSpace;
+          this.areas = state.areas;
+          if (this.areas.length) {
+              this.areaSelectionService.select(this.areas[0]);
+          }
+      });
+      /*this.load();*/
+  }
+
+  private initialiseForms() {
       this.userEmailCtrl = this.fb.control('', Validators.required);
       this.companyCtrl = this.fb.control(this.companyId, Validators.required);
       this.areaNameCtrl = this.fb.control('', Validators.required);
@@ -91,8 +99,6 @@ export class AreasComponent implements OnInit, OnDestroy {
           description: this.areaDescriptionCtrl,
           companyUuid: this.companyCtrl
       });
-
-      /*this.load();*/
   }
 
   private binarySearch(order: number) {

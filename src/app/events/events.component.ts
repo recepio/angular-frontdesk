@@ -9,7 +9,7 @@ import {Area} from '../area';
 import {Store} from '@ngrx/store';
 import {AppState} from '../store';
 import {User} from '../user';
-import {CreateWorkspace, LoadUsers} from '../store/actions/workspace.actions';
+import {CreateWorkspace, LoadWorkSpace} from '../store/actions/workspace.actions';
 
 @Component({
   selector: 'app-events',
@@ -33,12 +33,7 @@ export class EventsComponent implements OnInit{
           this.companyId = params['workspaceId'];
           this._workSpaceService.getUsers({companyId: this.companyId})
               .subscribe(
-                  (data) => {console.log(data); this.store.dispatch(new LoadUsers(data.users));},
-                  (error) => {console.log(error)}
-              );
-          this._descriptionService.getAreas({companyId: this.companyId})
-              .subscribe(
-                  (data) => {console.log(data); this.areas = data.areas},
+                  (data) => {console.log(data); this.store.dispatch(new LoadWorkSpace(data));},
                   (error) => {console.log(error)}
               );
       });

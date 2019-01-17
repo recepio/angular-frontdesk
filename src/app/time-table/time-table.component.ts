@@ -10,6 +10,7 @@ import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
 import { EventService } from '../event.service';
 import { HoodieService } from '../hoodie.service';
+import {ModalService} from '../services/modal.service';
 
 @Component({
   selector: 'app-time-table',
@@ -34,6 +35,7 @@ export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     @Inject('resourceService') public resourceService: ResourceService,
     @Inject('eventService') public eventService: EventService,
     private zone: NgZone,
+    private modalService: ModalService,
     private hoodieService: HoodieService
   ) { }
 
@@ -123,5 +125,13 @@ export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       console.log('resources unsubscribed');
     }
   }
+
+    openModal(id: string) {
+        this.modalService.open(id)
+    }
+
+    closeModal(id: string) {
+        this.modalService.close(id);
+    }
 
 }
