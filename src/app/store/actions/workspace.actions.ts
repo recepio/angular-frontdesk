@@ -17,4 +17,14 @@ export class LoadWorkSpace implements Action {
     constructor(public payload: any){}
 }
 
-export type WORKSPACE = | CreateWorkspace | CreateSuccess | LoadWorkSpace;
+export class AddUser implements Action {
+    readonly type = AuthActionTypes.ADD_USER;
+    constructor(public payload: any){}
+}
+
+export class AddArea implements Action {
+    readonly type = AuthActionTypes.ADD_AREA;
+    constructor(public payload: any){}
+}
+
+export type WORKSPACE = | CreateWorkspace | CreateSuccess | LoadWorkSpace | AddArea | AddUser;

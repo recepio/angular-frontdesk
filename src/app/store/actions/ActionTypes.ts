@@ -9,5 +9,7 @@ export enum AuthActionTypes{
     GET_STATUS = '[Auth] Auth Status',
     CREATE_WORKSPACE = '[Workspace] Create',
     CREATE_WORKSPACE_SUCCESS = '[Workspace] Create Success',
-    LOAD_WORKSPACE = '[Workspace] Load workspace]'
+    LOAD_WORKSPACE = '[Workspace] Load workspace]',
+    ADD_USER = '[Workspace] add new user ',
+    ADD_AREA = '[Workspace] add new area',
 }

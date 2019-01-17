@@ -14,6 +14,7 @@ import {AppState, selectAuthState} from '../store';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {User} from '../user';
+import {AddArea, AddUser, CreateWorkspace} from '../store/actions/workspace.actions';
 
 @Component({
   selector: 'app-areas',
@@ -31,6 +32,7 @@ export class AreasComponent implements OnInit, OnDestroy {
   areaDescriptionCtrl: FormControl;
   getState: Observable<any>;
   users: User[];
+  modalId: string;
 
   @Input() companyId: string;
 
@@ -190,6 +192,7 @@ export class AreasComponent implements OnInit, OnDestroy {
   }
 
   openModal(id: string) {
+      this.modalId = id;
      this.modalService.open(id)
   }
 
@@ -200,7 +203,10 @@ export class AreasComponent implements OnInit, OnDestroy {
   addUser(): void{
       this._workSpaceService.addUser(this.userForm.value, {companyId: this.companyId})
           .subscribe(
-              (data) => {console.log(data)},
+              (data) => {
+                  console.log(data);
+                  this.store.dispatch(new AddUser(data.user.users));
+              },
               (error) => {console.log(error.error)}
           );
   }
@@ -208,7 +214,10 @@ export class AreasComponent implements OnInit, OnDestroy {
   addArea(): void{
       this._descriptionService.addArea(this.areaForm.value, {companyId: this.companyId})
           .subscribe(
-              (data) => {console.log(data)},
+              (data) => {
+                  this.store.dispatch(new AddArea(data));
+                  this.closeModal(this.modalId);
+              },
               (error) => {console.log(error.error)}
           );
   }

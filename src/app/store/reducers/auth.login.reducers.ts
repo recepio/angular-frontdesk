@@ -47,6 +47,18 @@ export function loginReducer(state = initialState, action: AllLogin): State {
                 areas:  action.payload.areas
             };
         };
+        case  AuthActionTypes.ADD_USER: {
+            return {
+                ...state,
+                workSpace: action.payload
+            };
+        };
+        case  AuthActionTypes.ADD_AREA: {
+            state.areas.push(action.payload.area);
+            return {
+                ...state
+            };
+        };
         case AuthActionTypes.LOGOUT: {
             return initialState;
         };
