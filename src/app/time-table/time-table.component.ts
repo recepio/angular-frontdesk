@@ -19,6 +19,7 @@ import {ModalService} from '../services/modal.service';
 })
 export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
   @Input() area: Area;
+  @Input() companyId: string;
 
   resources: Resource[] = [];
 
@@ -35,7 +36,6 @@ export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     @Inject('resourceService') public resourceService: ResourceService,
     @Inject('eventService') public eventService: EventService,
     private zone: NgZone,
-    private modalService: ModalService,
     private hoodieService: HoodieService
   ) { }
 
@@ -126,12 +126,5 @@ export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
   }
 
-    openModal(id: string) {
-        this.modalService.open(id)
-    }
-
-    closeModal(id: string) {
-        this.modalService.close(id);
-    }
 
 }

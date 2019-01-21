@@ -9,7 +9,8 @@ export interface State {
     workSpace: workSpace | null,
     workSpaces: workSpace[] | null,
     users: User[] | null,
-    areas: Item[] | null,
+    clients: Item[] | null,
+    areas: any[] | null,
 }
 
 export const initialState: State = {
@@ -19,5 +20,6 @@ export const initialState: State = {
     workSpace: null,
     workSpaces: null,
     users: [],
+    clients: [],
     areas: [],
 };

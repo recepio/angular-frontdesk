@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {AuthActionTypes} from './ActionTypes';
-import {AddArea, AddUser, CreateSuccess, LoadWorkSpace} from './workspace.actions';
+import {AddArea, AddClient, AddDescription, AddPrice, AddResource, AddUser, CreateSuccess, LoadWorkSpace} from './workspace.actions';
 
 
 
@@ -31,4 +31,5 @@ export class SetStatus implements Action {
 
 
 
-export type AllLogin = | Login | LoginSuccess | LoginFailure | LogOut | SetStatus | CreateSuccess| LoadWorkSpace | AddArea | AddUser;
+export type AllLogin = | Login | LoginSuccess | LoginFailure | AddResource
+    | LogOut | SetStatus | CreateSuccess| LoadWorkSpace | AddArea | AddUser | AddClient | AddPrice | AddDescription;

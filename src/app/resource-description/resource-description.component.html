@@ -1,0 +1,56 @@
+<app-modal id="details-modal" title="Section Resources" >
+  <app-tabs>
+    <app-tab [tabTitle]="'Resource'">
+      {{ resource | json }}
+    </app-tab>
+    <app-tab [tabTitle]="'Gallery'">
+
+    </app-tab>
+    <app-tab [tabTitle]="'Descriptions'">
+      {{ descriptions | json }}
+      <div class="login-form">
+        <div class="">
+          <form id="resource_descriptions" (ngSubmit)="addDescription()" [formGroup]="descriptionForm" >
+            <div class="form-group">
+              <input type="email" class="form-control"  placeholder="description key" formControlName="name" >
+              <div *ngIf="descriptionKeyCtrl.dirty && descriptionKeyCtrl.hasError('required')">required</div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="description value" formControlName="description">
+              <div *ngIf="descriptionValueCtrl.dirty && descriptionValueCtrl.hasError('required')">required</div>
+            </div>
+            <button type="submit" [disabled]="descriptionForm.invalid" class="btn btn-primary gray">Add</button>
+          </form>
+        </div>
+      </div>
+    </app-tab>
+    <app-tab [tabTitle]="'Prices'">
+      {{ prices | json }}
+      <div class="login-form">
+        <div class="">
+          <form id="resource_prices" (ngSubmit)="addPrice()" [formGroup]="priceForm" >
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Pricing name" formControlName="name">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Fixed charge" formControlName="fixedCharge">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control"  placeholder="Charge Per Period of use" formControlName="basePricePerUse">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Resource booking class" formControlName="resourceBookingClass">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Period of use e.g daily, hourly" formControlName="periodOfUse" >
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control"  placeholder="discount" formControlName="discount">
+            </div>
+            <button type="submit" [disabled]="priceForm.invalid" class="btn btn-primary gray">Add</button>
+          </form>
+        </div>
+      </div>
+    </app-tab>
+  </app-tabs>
+</app-modal>

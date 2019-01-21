@@ -14,7 +14,8 @@ import {AppState, selectAuthState} from '../store';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {User} from '../user';
-import {AddArea, AddUser, CreateWorkspace} from '../store/actions/workspace.actions';
+import {AddArea, AddClient, AddUser, CreateWorkspace} from '../store/actions/workspace.actions';
+import {Item} from '../item';
 
 @Component({
   selector: 'app-areas',
@@ -24,14 +25,19 @@ import {AddArea, AddUser, CreateWorkspace} from '../store/actions/workspace.acti
 export class AreasComponent implements OnInit, OnDestroy {
 
   areas: Area[];
+  area: Area;
   userForm: FormGroup;
   userEmailCtrl: FormControl;
   companyCtrl: FormControl;
+  clientForm: FormGroup;
+  clientNameCtrl: FormControl;
+  clientEmailCtrl: FormControl;
   areaForm: FormGroup;
   areaNameCtrl: FormControl;
   areaDescriptionCtrl: FormControl;
   getState: Observable<any>;
   users: User[];
+  clients: Item[];
   modalId: string;
 
   @Input() companyId: string;
@@ -80,8 +86,12 @@ export class AreasComponent implements OnInit, OnDestroy {
       this.getState.subscribe((state) => {
           this.users = state.workSpace;
           this.areas = state.areas;
+          this.clients = state.clients;
+          console.log(this.areaSelectionService.current);
           if (this.areas.length) {
-              this.areaSelectionService.select(this.areas[0]);
+              if(!this.areaSelectionService.current){
+                 this.areaSelectionService.select(this.areas[0]);
+              }
           }
       });
       /*this.load();*/
@@ -90,6 +100,8 @@ export class AreasComponent implements OnInit, OnDestroy {
   private initialiseForms() {
       this.userEmailCtrl = this.fb.control('', Validators.required);
       this.companyCtrl = this.fb.control(this.companyId, Validators.required);
+      this.clientNameCtrl = this.fb.control('', Validators.required);
+      this.clientEmailCtrl = this.fb.control('', Validators.required);
       this.areaNameCtrl = this.fb.control('', Validators.required);
       this.areaDescriptionCtrl = this.fb.control('', Validators.required);
       this.userForm = this.fb.group({
@@ -99,6 +111,11 @@ export class AreasComponent implements OnInit, OnDestroy {
       this.areaForm = this.fb.group({
           name: this.areaNameCtrl,
           description: this.areaDescriptionCtrl,
+          companyUuid: this.companyCtrl
+      });
+      this.clientForm = this.fb.group({
+          name: this.clientNameCtrl,
+          email: this.clientEmailCtrl,
           companyUuid: this.companyCtrl
       });
   }
@@ -192,7 +209,7 @@ export class AreasComponent implements OnInit, OnDestroy {
   }
 
   openModal(id: string) {
-      this.modalId = id;
+     this.modalId = id;
      this.modalService.open(id)
   }
 
@@ -216,7 +233,20 @@ export class AreasComponent implements OnInit, OnDestroy {
           .subscribe(
               (data) => {
                   this.store.dispatch(new AddArea(data));
+                  this.areaSelectionService.select(data.area);
                   this.closeModal(this.modalId);
+              },
+              (error) => {console.log(error.error)}
+          );
+  }
+
+  addClient(): void{
+      console.log(this.clientForm.value);
+      this._descriptionService.addClient(this.clientForm.value, {companyId: this.companyId})
+          .subscribe(
+              (data) => {
+                  console.log(data);
+                  this.store.dispatch(new AddClient(data));
               },
               (error) => {console.log(error.error)}
           );

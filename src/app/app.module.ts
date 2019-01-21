@@ -52,7 +52,8 @@ import {AuthSignUpEffects} from './store/effects/auth.signup.effects';
 import {WorkspaceEffects} from './store/effects/workspace.effects';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tab/tab.component';
-import { PanelComponent } from './panel/panel.component';
+import { ResourceFormComponent } from './resource-form/resource-form.component';
+import { ResourceDescriptionComponent } from './resource-description/resource-description.component';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { PanelComponent } from './panel/panel.component';
     ModalComponent,
     TabsComponent,
     TabComponent,
-    PanelComponent
+    ResourceFormComponent,
+    ResourceDescriptionComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

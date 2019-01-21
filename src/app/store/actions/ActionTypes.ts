@@ -12,4 +12,8 @@ export enum AuthActionTypes{
     LOAD_WORKSPACE = '[Workspace] Load workspace]',
     ADD_USER = '[Workspace] add new user ',
     ADD_AREA = '[Workspace] add new area',
+    ADD_RESOURCE = '[Workspace] add new resource',
+    ADD_CLIENT = '[Workspace] add new client',
+    ADD_DESCRIPTION = '[Workspace] add new description',
+    ADD_PRICE = '[Workspace] add new price'
 }

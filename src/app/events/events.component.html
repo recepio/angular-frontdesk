@@ -1,6 +1,6 @@
 <div class="event-region">
 	<app-areas [companyId]="companyId" ></app-areas>
-	<app-time-table *ngIf="areaSelectionService.current" [area]="areaSelectionService.current"></app-time-table>
+	<app-time-table *ngIf="areaSelectionService.current" [area]="areaSelectionService.current" [companyId]="companyId"></app-time-table>
 </div>
 <!--
 <app-users>

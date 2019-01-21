@@ -44,7 +44,8 @@ export function loginReducer(state = initialState, action: AllLogin): State {
             return {
                 ...state,
                 workSpace: action.payload.users,
-                areas:  action.payload.areas
+                areas:  action.payload.areas,
+                clients: action.payload.clients
             };
         };
         case  AuthActionTypes.ADD_USER: {
@@ -54,7 +55,50 @@ export function loginReducer(state = initialState, action: AllLogin): State {
             };
         };
         case  AuthActionTypes.ADD_AREA: {
+            action.payload.area['resources'] = [];
             state.areas.push(action.payload.area);
+            return {
+                ...state
+            };
+        };
+        case  AuthActionTypes.ADD_RESOURCE: {
+            action.payload.resource['prices'] = [];
+            action.payload.resource['descriptions'] = [];
+            state.areas.map((area) => {
+                    if (area.id === action.payload.resource.areaId){
+                        return  area.resources.push(action.payload.resource);
+                    }return area;
+                });
+            return {
+                ...state
+            };
+        };
+        case  AuthActionTypes.ADD_PRICE: {
+            state.areas.map((area) => {
+               return area.resources.map((resource) => {
+                   if (resource.id === action.payload.price.resourceId){
+                       return  resource.prices.push(action.payload.price);
+                   }return resource;
+               });
+            });
+            return {
+                ...state
+            };
+        };
+        case  AuthActionTypes.ADD_DESCRIPTION: {
+            state.areas.map((area) => {
+                return area.resources.map((resource) => {
+                    if (resource.id === action.payload.description.resourceId){
+                        return  resource.descriptions.push(action.payload.description);
+                    }return resource;
+                });
+            });
+            return {
+                ...state
+            };
+        };
+        case  AuthActionTypes.ADD_CLIENT: {
+            state.clients.push(action.payload.client);
             return {
                 ...state
             };

@@ -18,6 +18,30 @@ export class WorkSpaceDescriptionService {
         return this.http.post<User>(url, payload);
     }
 
+    addResource(payload, query): Observable<any> {
+        const queryString = this.stringfyQuery(query);
+        const url = `${this.BASE_URL}/resource/?${queryString}`;
+        return this.http.post<User>(url, payload);
+    }
+
+    addDescription(payload, query): Observable<any> {
+        const queryString = this.stringfyQuery(query);
+        const url = `${this.BASE_URL}/resource-description/?${queryString}`;
+        return this.http.post<User>(url, payload);
+    }
+
+    addPrice(payload, query): Observable<any> {
+        const queryString = this.stringfyQuery(query);
+        const url = `${this.BASE_URL}/resource-price/?${queryString}`;
+        return this.http.post<User>(url, payload);
+    }
+
+    addClient(payload, query): Observable<any> {
+        const queryString = this.stringfyQuery(query);
+        const url = `${this.BASE_URL}/client/?${queryString}`;
+        return this.http.post<User>(url, payload);
+    }
+
     getAreas(query): Observable<any> {
         const queryString = this.stringfyQuery(query);
         const url = `${this.BASE_URL}/area/?${queryString}`;

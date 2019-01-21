@@ -11,6 +11,7 @@
   </div>
   <button class="btn-primary" (click)="openModal('area-modal')">Sections</button>
   <button class=" btn-primary" (click)="openModal('user-modal')">Users</button>
+  <button class=" btn-primary" (click)="openModal('client-modal')">Clients</button>
 
   <div></div>
 </div>
@@ -49,6 +50,28 @@
             required</div>
         </div>
         <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary gray">Add</button>
+
+      </form>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal id="client-modal" title="workspace clients" >
+  <span *ngFor="let client of clients" style="padding: 5px">{{client | json}}</span>
+  <div class="login-form">
+    <div class="">
+      <form id="Clients" (ngSubmit)="addClient()" [formGroup]="clientForm" >
+        <div class="form-group">
+          <input type="text" class="form-control"  placeholder="Name" formControlName="name">
+          <div *ngIf="clientNameCtrl.dirty && clientNameCtrl.hasError('required')">Username is
+            required</div>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control"  placeholder="Email Address" formControlName="email">
+          <div *ngIf="clientEmailCtrl.dirty && clientEmailCtrl.hasError('required')">Username is
+            required</div>
+        </div>
+        <button type="submit" [disabled]="clientForm.invalid" class="btn btn-primary gray">Add</button>
 
       </form>
     </div>
