@@ -9,6 +9,7 @@ import { AuthCompanyEmailComponent } from './auth/auth-company-email/auth-compan
 import { AuthCompanyComponent } from './auth/auth-company/auth-company.component';
 import {AuthSignUpComponent} from './auth/auth-sign-up/auth-sign-up.component';
 import {AuthGuardService} from './services/auth-guard.service';
+import {BookingComponent} from './booking/booking.component';
 
 const routes: Routes = [
   { path: '', component: AuthLoginComponent  },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'company/add/user', component: AuthCompanyEmailComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'detail/:id', component: EventDetailComponent, canActivate: [AuthGuardService] },
-  { path: ':workspaceId/events', component: EventsComponent, canActivate: [AuthGuardService] }
+  { path: ':workspaceId/events', component: EventsComponent, canActivate: [AuthGuardService] },
+  { path: ':workspaceId/book', component: BookingComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

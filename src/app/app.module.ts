@@ -54,6 +54,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tab/tab.component';
 import { ResourceFormComponent } from './resource-form/resource-form.component';
 import { ResourceDescriptionComponent } from './resource-description/resource-description.component';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { ResourceDescriptionComponent } from './resource-description/resource-de
     TabsComponent,
     TabComponent,
     ResourceFormComponent,
-    ResourceDescriptionComponent
+    ResourceDescriptionComponent,
+    BookingComponent
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
