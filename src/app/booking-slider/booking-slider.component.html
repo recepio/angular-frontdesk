@@ -1,0 +1,29 @@
+<div>
+  <svg width="945" height="100" appSliderFullBarElem >
+
+    <!--slider selection-->
+    <rect class="" width="350" height="30" x="5" y="30" fill="blanchedalmond" appSliderSelBarElem />
+    <!--full slider-->
+    <text [attr.x]="paddingLeft" [attr.y]="30" >{{ timelineService.startFrom | date:'MMMM y' }}</text>
+    <text [attr.x]="paddingLeft" [attr.y]="50">{{ timelineService.startFrom | date:'dd' }}</text>
+    <g *ngFor="let i of fitDays | fill">
+      <text
+              [attr.x]="i * 30 + paddingLeft"
+              [attr.y]="30" *ngIf="isFirstDay(addDays(i))"
+      >{{ addDays(i) | date:'MMMM y' }}</text>
+      <text [attr.x]="i * 30 + paddingLeft" [attr.y]="50">{{ addDays(i) | date:'dd' }}</text>
+    </g>
+  </svg>
+  <svg width="10" x="5" appSliderMinHElem>
+    <circle cx="5" cy="10" [attr.r]="5" fill="#e4c89d" />
+    <path d="M 5 10 5 75" fill="none" stroke="#e4c89d" stroke-width="4"></path>
+    <circle cx="5" cy="80" [attr.r]="5" fill="#e4c89d" />
+  </svg>
+
+  <!--right handle-->
+  <svg width="10" x="5" appSliderMaxHElem>
+    <circle cx="5" cy="10" [attr.r]="5" fill="#e4c89d" />
+    <path d="M 5 10 5 75" fill="none" stroke="#e4c89d" stroke-width="4"></path>
+    <circle cx="5" cy="80" [attr.r]="5" fill="#e4c89d" />
+  </svg>
+</div>

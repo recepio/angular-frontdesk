@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'detail/:id', component: EventDetailComponent, canActivate: [AuthGuardService] },
   { path: ':workspaceId/events', component: EventsComponent, canActivate: [AuthGuardService] },
-  { path: ':workspaceId/book', component: BookingComponent, canActivate: [AuthGuardService] }
+  { path: ':workspaceId/book', component: BookingComponent, canActivate: [AuthGuardService] },
+  { path: ':workspaceId/dashboard', component: DashboardComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

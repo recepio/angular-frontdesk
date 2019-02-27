@@ -55,6 +55,7 @@ import { TabComponent } from './tab/tab.component';
 import { ResourceFormComponent } from './resource-form/resource-form.component';
 import { ResourceDescriptionComponent } from './resource-description/resource-description.component';
 import { BookingComponent } from './booking/booking.component';
+import {BookingSliderModule} from './booking-slider/booking-slider.module';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { BookingComponent } from './booking/booking.component';
     DndModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AuthLoginEffects, AuthSignUpEffects, WorkspaceEffects]),
+    BookingSliderModule
   ],
   declarations: [
     AppComponent,
@@ -79,7 +81,6 @@ import { BookingComponent } from './booking/booking.component';
     ResourceItemComponent,
     TimeEventsComponent,
     TimelineComponent,
-    FillPipe,
     UserFormComponent,
     SelectableDirective,
     UserItemComponent,
@@ -99,7 +100,7 @@ import { BookingComponent } from './booking/booking.component';
     TabComponent,
     ResourceFormComponent,
     ResourceDescriptionComponent,
-    BookingComponent
+    BookingComponent,
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

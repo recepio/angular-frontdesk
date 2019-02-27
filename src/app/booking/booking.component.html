@@ -1,61 +1,38 @@
-<div>
-  <input type="email" class="form-control" id="inputEmail" placeholder="Location A" style="width: 160px" >
-</div>
-<div>
-  <select class="soflow">
-    <option>Hr</option>
-    <option>Option 1</option>
-    <option>Option 2</option>
-  </select>
-  <select class="soflow">
-    <option>Min</option>
-    <option>Option 1</option>
-    <option>Option 2</option>
-  </select>
-</div>
-<div>
-  <svg width="800" height="200" viewBox="0 0 900 200">
 
-    <g *ngFor="let i of fitDays | fill">
-      <text
-              [attr.x]="i * timelineService.dayWidth + paddingLeft"
-              [attr.y]="48"
-              *ngIf="isFirstDay(addDays(i))"
-              font-size="9pt"
-      >{{ addDays(i) | date:'MMMM y' }}</text>
-      <text [attr.x]="i * timelineService.dayWidth + paddingLeft" [attr.y]="30" font-size="9pt">{{ addDays(i) | date:'dd' }}</text>
-    </g>
+<app-booking-slider [(value)]="minValue" [(highValue)]="maxValue"
+                    (userChangeStart)="onUserChangeStart($event)"
+                    (userChange)="onUserChange($event)"
+                    (userChangeEnd)="onUserChangeEnd($event)" style="left: 100px; position: absolute;">
+</app-booking-slider>
+<span class="container" style=" margin-top: 100px; position: absolute;">
+{{dateRange}}
+</span>
+<div  style=" margin-top: 120px; position: absolute;">
+<div *ngFor="let area of areas">
+    <div class="flex-contain" >
+        <div class="product-card" *ngFor="let resource of area.resources">
+            <div class="product-details">
+                <span class="product-catagory">{{area.name}}</span>
+                <h4><a href="">{{resource.name}}</a></h4>
+                <p>{{resource.description}}</p>
+                <div class="product-bottom-details">
+                    <div class="product-price"><small>$96.00</small>$230.99</div>
+                    <div class="product-links">
+                        <a href="" (click)="openModal('area-modal')">Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <rect class="" width="350" height="50" x="100" y="60" fill="cornsilk" />
-    <circle cx="100" cy="0" [attr.r]="10" fill="#e4c89d" />
-    <path d="M 100 10 100 110" fill="none" stroke="#e4c89d" stroke-width="4"></path>
-    <circle cx="450" cy="170" [attr.r]="10" fill="#e4c89d" />
-    <path d="M 450 60 450 170" fill="none" stroke="#e4c89d" stroke-width="4"></path>
-    <g *ngFor="let i of fitDays | fill">
-      <text
-              [attr.x]="i * timelineService.dayWidth + paddingLeft"
-              [attr.y]="height - 18"
-              *ngIf="isFirstDay(addDays(i))"
-              font-size="9pt"
-      >{{ addDays(i) | date:'MMMM y' }}</text>
-      <text [attr.x]="i * timelineService.dayWidth + paddingLeft" [attr.y]="height - 2" font-size="9pt">{{ addDays(i) | date:'dd' }}</text>
-    </g>
-  </svg>
 </div>
-<div style="margin: -35px 0px 0px 320px;">
-  <div>
-    <select class="soflow">
-      <option>Hr</option>
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </select>
-    <select class="soflow">
-      <option>Min</option>
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </select>
-  </div>
-  <div>
-    <input type="email" class="form-control"  placeholder="Location B" style="width: 160px" >
-  </div>
-</div>
+
+
+<app-modal id="area-modal" title="Book Resource" >
+    <div class="login-form">
+        <div class="">
+
+        </div>
+    </div>
+</app-modal>

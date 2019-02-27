@@ -86,6 +86,7 @@ export class AreasComponent implements OnInit, OnDestroy {
       this.getState.subscribe((state) => {
           this.users = state.workSpace;
           this.areas = state.areas;
+          console.log(this.areas);
           this.clients = state.clients;
           console.log(this.areaSelectionService.current);
           if (this.areas.length) {

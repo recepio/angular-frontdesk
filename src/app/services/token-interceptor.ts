@@ -7,6 +7,7 @@ import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
 import { _throw } from 'rxjs/observable/throw';
 import {Router} from '@angular/router';
+import {LogOut} from '../store/actions/auth.login.actions';
 
 
 @Injectable()
@@ -28,15 +29,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private router: Router, private store: Store<AppState>) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         return next.handle(request)
             .pipe(
                 catchError((response: any) => {
                         if (response instanceof HttpErrorResponse && response.status === 401) {
-                            localStorage.removeItem('token');
-                            this.router.navigateByUrl('/');
+                            this.store.dispatch(new LogOut({}));
                         }
                         return _throw(response);
                     })

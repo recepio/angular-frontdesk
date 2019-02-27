@@ -29,6 +29,7 @@
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
     "date-fns": "^1.29.0",
+    "detect-passive-events": "^1.0.4",
     "font-awesome": "^4.7.0",
     "ng2-dnd": "^5.0.2",
     "pouchdb-browser": "^6.4.3",
