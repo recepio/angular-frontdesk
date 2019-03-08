@@ -8,23 +8,21 @@
 {{dateRange}}
 </span>
 <div  style=" margin-top: 120px; position: absolute;">
-<div *ngFor="let area of areas">
     <div class="flex-contain" >
-        <div class="product-card" *ngFor="let resource of area.resources">
+        <div class="product-card" *ngFor="let resource of resources">
             <div class="product-details">
-                <span class="product-catagory">{{area.name}}</span>
+                <span class="product-catagory">area.name</span>
                 <h4><a href="">{{resource.name}}</a></h4>
                 <p>{{resource.description}}</p>
                 <div class="product-bottom-details">
                     <div class="product-price"><small>$96.00</small>$230.99</div>
                     <div class="product-links">
-                        <a href="" (click)="openModal('area-modal')">Book</a>
+                        <a href="" (click)="openModal('area-modal', resource)">Book</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>
 
@@ -32,7 +30,18 @@
 <app-modal id="area-modal" title="Book Resource" >
     <div class="login-form">
         <div class="">
+            <div>{{dateRange}}</div>
+            <div>{{resource | json }}</div>
+            <form id="sections" (ngSubmit)="createReservation()" [formGroup]="bookingForm"  >
+                <div class="form-group">
+                    <select class="form-control" formControlName="userEmail">
+                        <option>client detail</option>
+                        <option *ngFor="let client of clients" [value]="client.email">{{client.email}}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary gray">Make reservation</button>
 
+            </form>
         </div>
     </div>
 </app-modal>

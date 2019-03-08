@@ -23,8 +23,8 @@ import {LabelType} from './test';
 import {ControlValueAccessor} from '@angular/forms';
 
 export class ChangeContext {
-    value: number;
-    highValue: number;
+    value: string;
+    highValue: string;
 }
 enum HandleType {
     Low,
@@ -854,8 +854,8 @@ export class BookingSliderComponent implements OnInit, AfterViewInit, OnChanges,
 
     private getChangeContext(): ChangeContext {
         const changeContext: ChangeContext = new ChangeContext();
-        changeContext.value = this.value;
-        changeContext.highValue = this.highValue;
+        changeContext.value = new Date(this.value).toDateString();
+        changeContext.highValue = new Date(this.highValue).toDateString();
         return changeContext;
     }
 
