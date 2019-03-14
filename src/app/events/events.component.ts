@@ -10,6 +10,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../store';
 import {User} from '../user';
 import {CreateWorkspace, LoadWorkSpace} from '../store/actions/workspace.actions';
+import {BookingService} from '../services/booking.service';
 
 @Component({
   selector: 'app-events',
@@ -26,6 +27,7 @@ export class EventsComponent implements OnInit{
       private store: Store<AppState>,
       private _workSpaceService: WorkspaceService,
       private  _descriptionService: WorkSpaceDescriptionService,
+      private _bookingService: BookingService
   ) { }
 
   ngOnInit(){
@@ -33,10 +35,11 @@ export class EventsComponent implements OnInit{
           this.companyId = params['workspaceId'];
           this._workSpaceService.getUsers({companyId: this.companyId})
               .subscribe(
-                  (data) => {console.log(data); this.store.dispatch(new LoadWorkSpace(data));},
+                  (data) => {console.log(data);this.store.dispatch(new LoadWorkSpace(data));},
                   (error) => {console.log(error)}
               );
       });
+
   }
 
 

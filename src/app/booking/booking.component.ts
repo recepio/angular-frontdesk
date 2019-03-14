@@ -11,7 +11,7 @@ import {ModalService} from '../services/modal.service';
 import {Item} from '../item';
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
-import {debounceTime, debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators';
 import {AddArea, LoadWorkSpace} from '../store/actions/workspace.actions';
 import {ActivatedRoute} from '@angular/router';
 import {BookingService} from '../services/booking.service';

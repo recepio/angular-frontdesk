@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Inject, HostListener, ElementRef, OnDestroy } from '@angular/core';
+import {Component, Input, OnInit, Inject, HostListener, ElementRef, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -14,7 +14,7 @@ import { HoodieService } from '../hoodie.service';
   templateUrl: './time-events.component.html',
   styleUrls: ['./time-events.component.scss']
 })
-export class TimeEventsComponent implements OnInit, OnDestroy {
+export class TimeEventsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() resource: Resource;
 
   events: Event[] = [];
@@ -97,9 +97,17 @@ export class TimeEventsComponent implements OnInit, OnDestroy {
   trackByEvents(index: number, event: Event): string { return event._id; }
 
   ngOnInit() {
-    this.load();
+    //this.load();
+    this.events = this.resource.details;
+    console.log(this.events);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.resource) {
+      console.log(this.resource);
+        this.events = this.resource.details;
+    }
+  }
   private load() {
     const filter = item => item.type === 'event' && item.resource === this.resource._id;
     this.events = [];
@@ -184,7 +192,7 @@ export class TimeEventsComponent implements OnInit, OnDestroy {
     } else {
       const date = new Date(this.timelineService.startFrom.getTime() +
         (position.x / this.timelineService.dayWidth * 24 * 60 * 60 * 1000));
-      const event = new Event(this.resource._id, date, 3 * 24 * 60 * 60 * 1000);
+      const event = new Event(this.resource._id, date, date, 3 * 24 * 60 * 60 * 1000);
       event.users = [data.id];
       this.eventService.add(event);
       return event;

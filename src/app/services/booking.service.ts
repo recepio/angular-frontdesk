@@ -18,6 +18,12 @@ export class BookingService {
         return this.http.post<User>(url, payload);
     }
 
+    bookings( query): Observable<any> {
+        const queryString = this.stringfyQuery(query);
+        const url = `${this.BASE_URL}/?${queryString}`;
+        return this.http.get<User>(url);
+    }
+
     rangeSearch(payload, query): Observable<any> {
         const queryString = this.stringfyQuery(query);
         const url = `${this.BASE_URL}/search/?${queryString}`;

@@ -103,14 +103,14 @@ export class TimeTableComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   add() {
-    let newName: string;
+    /*let newName: string;
     let i = 0;
     do {
       i++;
       newName = `Resource${i}`;
     } while (this.resources.find(item => item.name === newName));
     const resource = new Resource(this.area._id, newName, this.resources.length);
-    this.resourceService.add(resource);
+    this.resourceService.add(resource);*/
   }
 
   private scroll() {

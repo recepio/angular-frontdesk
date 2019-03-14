@@ -22,12 +22,16 @@ export class EventItemComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.width')
   public get getWidth(): string {
-    return `${this.event.duration / 24 / 60 / 60 / 1000 * this.timelineService.dayWidth}px`;
+      const a = new Date(this.event.dateFrom),
+          b = new Date(this.event.dateTo),
+          difference = this.dateDiffInDays(a, b);
+    return `${difference * this.timelineService.dayWidth}px`;
   }
 
   @HostBinding('style.left')
   public get getLeft(): string {
-    const days = (this.event.date.getTime() - this.timelineService.startFrom.getTime()) / 24 / 60 / 60 / 1000;
+    console.log(new Date(this.event.dateFrom).toLocaleString());
+    const days = (new Date(this.event.dateFrom).getTime() - this.timelineService.startFrom.getTime()) / 24 / 60 / 60 / 1000;
     return `${days * this.timelineService.dayWidth}px`;
   }
 
@@ -38,7 +42,16 @@ export class EventItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log(this.event);
     this.load();
+  }
+
+  dateDiffInDays(a, b) {
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+    return Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
   }
 
   private load() {
