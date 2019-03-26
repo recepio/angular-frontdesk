@@ -1,0 +1,37 @@
+.cd-timeline__date {
+  display: inline-block;
+  float: left;
+  padding: .2em 0;
+}
+.cd-timeline__read-more{
+  opacity: .7;
+  float: right;
+  padding: .5em .7em;
+  background: #e42b19;
+  color: white;
+  border-radius: 0.25em;
+  margin: 20px 10px;
+  text-decoration: none;
+}
+.cd-timeline__read-more:hover {
+  background-color: #79150c;
+}
+.event-flex-container{
+  display: flex;
+  flex-flow: row;
+}
+div.timer {
+  border:1px #666666 solid;
+
+  width:190px;
+  left: 30px;
+  height:50px;
+  line-height:50px;
+  font-size:36px;
+  font-family:"Courier New", Courier, monospace;
+  text-align:center;
+  margin:5px;
+}
+.cd-timeline__read-more {
+  font-size: 1.3rem;
+}

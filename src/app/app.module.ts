@@ -56,6 +56,8 @@ import { ResourceFormComponent } from './resource-form/resource-form.component';
 import { ResourceDescriptionComponent } from './resource-description/resource-description.component';
 import { BookingComponent } from './booking/booking.component';
 import {BookingSliderModule} from './booking-slider/booking-slider.module';
+import {EventTimerModule} from './event-timer/event-timer.module';
+import {EventTimerComponent} from './event-timer/event-timer.component';
 
 @NgModule({
   imports: [
@@ -67,7 +69,8 @@ import {BookingSliderModule} from './booking-slider/booking-slider.module';
     DndModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AuthLoginEffects, AuthSignUpEffects, WorkspaceEffects]),
-    BookingSliderModule
+    BookingSliderModule,
+    EventTimerModule
   ],
   declarations: [
     AppComponent,

@@ -20,7 +20,7 @@ export class BookingService {
 
     bookings( query): Observable<any> {
         const queryString = this.stringfyQuery(query);
-        const url = `${this.BASE_URL}/?${queryString}`;
+        const url = `${this.BASE_URL}/bookings?${queryString}`;
         return this.http.get<User>(url);
     }
 
