@@ -1,32 +1,25 @@
-<h3>Top Events</h3>
-<!--<div class="grid grid-pad">
-  <a class="col-1-4" >
-    <div class="module event">
-      <h4>event.date</h4>
-    </div>
-  </a>
-</div>-->
-<section class="cd-timeline js-cd-timeline">
-    <div class="cd-timeline__container" *ngFor="let summary of events">
+<!--<h3>Top Events</h3>-->
+    <section class="cd-timeline js-cd-timeline">
+        <div class="cd-timeline__container" *ngFor="let summary of events">
             <div class="cd-timeline__block js-cd-block" *ngFor="let detail of summary.details">
-                <div class="cd-timeline__img cd-timeline__img--movie js-cd-img">
-                </div> <!-- cd-timeline__img -->
 
                 <div class="cd-timeline__content js-cd-content">
                     <div>
                         <h5>{{detail.userEmail}}</h5>
+                        <h5>{{detail.costOfService | currency}}</h5>
                         <p>{{detail.resourceName}}</p>
-                        <span class="cd-timeline__date">{{detail.dateFrom}}</span>
-                        <span class="cd-timeline__date">{{detail.dateTo}}</span>
+                        <span class="cd-timeline__date">{{detail.dateFrom | date: 'fullDate'}}</span>
+                        <span class="cd-timeline__date">{{detail.dateTo | date: 'fullDate'}}</span>
                     </div>
                     <div >
-                       <app-event-timer [eventDetails]="detail" ></app-event-timer>
+                        <app-event-timer [eventDetails]="detail" ></app-event-timer>
                     </div>
                 </div> <!-- cd-timeline__content -->
             </div> <!-- cd-timeline__block -->
 
-    </div>
-</section>
-<app-event-search></app-event-search>
+        </div>
+    </section>
+
+<!--<app-event-search></app-event-search>-->
 
 

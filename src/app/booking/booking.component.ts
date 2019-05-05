@@ -15,6 +15,7 @@ import {debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/oper
 import {AddArea, LoadWorkSpace} from '../store/actions/workspace.actions';
 import {ActivatedRoute} from '@angular/router';
 import {BookingService} from '../services/booking.service';
+import {WorkspaceService} from '../services/workspace.service';
 
 @Component({
   selector: 'app-booking',
@@ -39,6 +40,7 @@ export class BookingComponent implements OnInit, OnChanges {
   bookingForm: FormGroup;
   rangeForm: FormGroup;
   clientCtrl: FormControl;
+  priceCtrl: FormControl;
   dateFromCtrl: FormControl;
   dateToCtrl: FormControl;
   resourceNameCtrl: FormControl;
@@ -53,6 +55,7 @@ export class BookingComponent implements OnInit, OnChanges {
               private store: Store<AppState>,
               private  fb: FormBuilder,
               private route: ActivatedRoute,
+              private _workSpaceService: WorkspaceService,
               private _bookingService: BookingService,
               private modalService: ModalService) {
       this.getState = this.store.select(selectAuthState);
@@ -71,13 +74,19 @@ export class BookingComponent implements OnInit, OnChanges {
       });
       this.route.params.subscribe(params => {
           this.companyId = params['workspaceId'];
+          this._workSpaceService.getUsers({companyId: this.companyId})
+              .subscribe(
+                  (data) => {console.log(data); this.store.dispatch(new LoadWorkSpace(data));},
+                  (error) => {console.log(error);}
+              );
       });
-    this.dateRange = `value: ${new Date(this.minValue).toDateString()} , highValue: ${new Date(this.maxValue).toDateString()}`;
+    this.dateRange = `start From: ${new Date(this.minValue).toDateString()} , end Date: ${new Date(this.maxValue).toDateString()}`;
     this.$dateRange = this.listenAndSuggest();
     this.dataSubject.next(this.intialContext());
     this.clientCtrl = this.fb.control('', Validators.required);
     this.dateFromCtrl = this.fb.control('', Validators.required);
     this.dateToCtrl = this.fb.control('', Validators.required);
+    this.priceCtrl = this.fb.control('', Validators.required);
     this.resourceIdCtrl = this.fb.control('', Validators.required);
     this.resourceNameCtrl = this.fb.control('', Validators.required);
     this.dateFromCtrl.setValue(new Date(this.minValue).toDateString());
@@ -85,6 +94,7 @@ export class BookingComponent implements OnInit, OnChanges {
     this.bookingForm = this.fb.group({
           userEmail: this.clientCtrl,
           dateFrom: this.dateFromCtrl,
+          costOfService: this.priceCtrl,
           dateTo: this.dateToCtrl,
           resourceId: this.resourceIdCtrl,
           resourceName: this.resourceNameCtrl
@@ -112,7 +122,7 @@ export class BookingComponent implements OnInit, OnChanges {
   }
 
   getChangeContextString(changeContext: ChangeContext): string {
-    return `value: ${changeContext.value}, ` + `highValue: ${changeContext.highValue}`;
+    return `start From: ${changeContext.value}, ` + `end Date: ${changeContext.highValue}`;
   }
 
   private intialContext(): ChangeContext {
@@ -165,6 +175,9 @@ export class BookingComponent implements OnInit, OnChanges {
           .subscribe(
               (data) => {
                   console.log(data);
+                  this.priceCtrl.reset();
+                  this.clientCtrl.reset();
+                  this.dataSubject.next(this.intialContext());
                   this.closeModal(this.modalId);
               },
               (error) => {console.log(error.error)}

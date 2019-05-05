@@ -221,6 +221,7 @@ export class AreasComponent implements OnInit, OnDestroy {
           .subscribe(
               (data) => {
                   console.log(data);
+                  this.userEmailCtrl.reset();
                   this.store.dispatch(new AddUser(data.user.users));
               },
               (error) => {console.log(error.error)}
@@ -233,6 +234,8 @@ export class AreasComponent implements OnInit, OnDestroy {
               (data) => {
                   this.store.dispatch(new AddArea(data));
                   this.areaSelectionService.select(data.area);
+                  this.areaNameCtrl.reset();
+                  this.areaDescriptionCtrl.reset();
                   this.closeModal(this.modalId);
               },
               (error) => {console.log(error.error)}
@@ -245,6 +248,8 @@ export class AreasComponent implements OnInit, OnDestroy {
           .subscribe(
               (data) => {
                   console.log(data);
+                  this.clientEmailCtrl.reset();
+                  this.clientNameCtrl.reset();
                   this.store.dispatch(new AddClient(data));
               },
               (error) => {console.log(error.error)}

@@ -43,7 +43,15 @@
 </app-modal>
 
 <app-modal id="user-modal" title="Workspace Users" >
-  <span *ngFor="let user of users" style="padding: 5px">{{user | json}}</span>
+
+    <div class="flex-contain" *ngFor="let user of users" >
+        <div class="product-card" >
+            <div class="product-details">
+                <span class="product-catagory">{{user.position}}</span>
+                <h5>{{user.email}}</h5>
+            </div>
+        </div>
+    </div>
   <div class="login-form">
     <div class="">
       <form id="Users" (ngSubmit)="addUser()" [formGroup]="userForm" >
@@ -60,7 +68,14 @@
 </app-modal>
 
 <app-modal id="client-modal" title="workspace clients" >
-  <span *ngFor="let client of clients" style="padding: 5px">{{client | json}}</span>
+    <div class="flex-contain" *ngFor="let client of clients" >
+        <div class="product-card" >
+            <div class="product-details">
+                <span class="product-catagory">{{client.name}}</span>
+                <h5>{{client.email}}</h5>
+            </div>
+        </div>
+    </div>
   <div class="login-form">
     <div class="">
       <form id="Clients" (ngSubmit)="addClient()" [formGroup]="clientForm" >

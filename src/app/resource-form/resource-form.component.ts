@@ -77,6 +77,10 @@ export class ResourceFormComponent implements OnInit {
       this._descriptionService.addResource(this.resourceForm.value, {companyId: this.companyId}).subscribe(
           (data) => {
               console.log(data);
+              this.resourceNamelCtrl.reset();
+              this.resourceDescriptionCtrl.reset();
+              this.resourceInstancesCtrl.reset();
+              this.resourceBookingCapacityIndexCtrl.reset();
               this.store.dispatch(new AddResource(data));
               this.closeModal(this.modalId);
           },

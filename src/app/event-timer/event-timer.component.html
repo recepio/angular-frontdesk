@@ -2,13 +2,13 @@
   <div >
     <span class="hour">{{durationFormat.days}}</span>
     <div class="timer">
-      <span class="hour">{{durationFormat.hours}}</span>:<span class="minute">{{durationFormat.days}}</span>:<span class="second">{{durationFormat.seconds}}</span>
+      <span class="hour">{{durationFormat.hours}}</span>:<span class="minute">{{durationFormat.minutes}}</span>:<span class="second">{{durationFormat.seconds}}</span>
     </div>
-    <span class="cd-timeline__date">{{startTime}}</span>
-    <span class="cd-timeline__date">{{stopTime}}</span>
+    <span class="cd-timeline__date">{{startTime | date: 'fullDate'}} {{startTime | date: 'fullTime'}}</span>
+    <span class="cd-timeline__date">{{stopTime | date: 'fullDate'}} {{stopTime | date: 'fullTime'}}</span>
   </div>
   <div>
-    <a href="#" (click)="startEvent()" class="cd-timeline__read-more">Start Event</a>
-    <a href="#" (click)="endEvent()" class="cd-timeline__read-more">End Event</a>
+    <a href="#" *ngIf="!startTime" (click)="startEvent()" class="cd-timeline__read-more">Start Event</a>
+    <a href="#" *ngIf="!stopTime"  (click)="endEvent()" class="cd-timeline__read-more">End Event</a>
   </div>
 </div>

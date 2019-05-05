@@ -1,12 +1,18 @@
 <app-modal id="details-modal" title="Section Resources" >
   <app-tabs>
     <app-tab [tabTitle]="'Resource'">
-      {{ resource | json }}
+      <div class="flex-contain" *ngIf="resource" >
+        <div class="product-card">
+          <div class="product-details">
+            <span class="product-catagory">{{resource.resourceInstances}}</span>
+            <h4>{{resource.name}}</h4>
+            <p>{{resource.description}}</p>
+          </div>
+        </div>
+      </div>
     </app-tab>
-    <app-tab [tabTitle]="'Gallery'">
 
-    </app-tab>
-    <app-tab [tabTitle]="'Descriptions'">
+    <!--<app-tab [tabTitle]="'Descriptions'">
       {{ descriptions | json }}
       <div class="login-form">
         <div class="">
@@ -23,8 +29,8 @@
           </form>
         </div>
       </div>
-    </app-tab>
-    <app-tab [tabTitle]="'Prices'">
+    </app-tab>-->
+    <!--<app-tab [tabTitle]="'Price'">
       {{ prices | json }}
       <div class="login-form">
         <div class="">
@@ -51,6 +57,6 @@
           </form>
         </div>
       </div>
-    </app-tab>
+    </app-tab>-->
   </app-tabs>
 </app-modal>
